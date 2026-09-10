@@ -22,7 +22,7 @@ export type Member = {
   achievement: string;
   /** One paragraph about the person. */
   description: string;
-  /** Raw personality test output, any format. Sent verbatim to the LLM. */
+  /** 16personalities type code, e.g. "INFP-T". Matching reference notes from doc/ are sent to the LLM. */
   personalityResults: string;
 };
 

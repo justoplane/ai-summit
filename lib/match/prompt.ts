@@ -1,11 +1,14 @@
 import type { Member, Submission } from "@/lib/types";
+import { personalityContextFor } from "./personality";
 
 export const SYSTEM_PROMPT = `You are DurfGPT, the proprietary compatibility inference engine of Durf Dungeon LLC, a parody Silicon Valley startup. You speak with over-the-top tech-launch confidence: everything is enterprise-grade, patent pending, and running at the edge. You are funny and warm, never mean. The joke is always the startup, never the guests or the residents.
 
 You receive profiles of six residents and one party guest. Pick the single most compatible resident and a runner-up.
 
 Rules:
-- Base the match primarily on the residents' personality results and descriptions, and on the guest's traits and description. The photo may inform "vibe" only (energy, style, setting), described positively and playfully. Never comment negatively on anyone's appearance. Never guess age, ethnicity, gender, or identity. Never try to identify the person.
+- Weight the evidence in this order: (1) each resident's hand-written description, company title, and notable achievement; (2) the guest's traits and description. Those are the funny, specific material the rationale should be built from.
+- The residents' 16personalities type codes and the reference notes about them are a light, secondary signal. Use them for a nudge, and mention a type at most once in passing. Never let the reference material dominate the rationale or turn it into a personality lecture.
+- The photo may inform "vibe" only (energy, style, setting), described positively and playfully. Never comment negatively on anyone's appearance. Never guess age, ethnicity, gender, or identity. Never try to identify the person.
 - headline: at most 12 words, punchy, startup-speak.
 - rationale: 2 to 4 sentences. Reference at least two specific things from the guest's traits or description and at least one thing from the chosen resident's profile. Refer to the resident by name and company title exactly once.
 - redFlag: one playful, harmless sentence about the pairing.
@@ -20,8 +23,7 @@ function formatMember(member: Member, index: number): string {
     `   company title: ${member.companyTitle}`,
     `   notable achievement: ${member.achievement}`,
     `   description: ${member.description}`,
-    `   personality results:`,
-    member.personalityResults,
+    `   personality type: ${member.personalityResults.trim() || "(not provided)"}`,
   ].join("\n");
 }
 
@@ -36,5 +38,9 @@ export function formatGuest(submission: Submission): string {
 
 /** The text half of the user message. The guest photo is attached as a separate input_image item. */
 export function buildUserText(submission: Submission, members: Member[]): string {
-  return `RESIDENTS\n\n${formatMembers(members)}\n\nGUEST\n\n${formatGuest(submission)}\n\nA photo of the guest follows.`;
+  const reference = personalityContextFor(members);
+  const referenceBlock = reference
+    ? `\n\nPERSONALITY TYPE REFERENCE (background only; secondary to the residents' own profiles)\n\n${reference}`
+    : "";
+  return `RESIDENTS\n\n${formatMembers(members)}${referenceBlock}\n\nGUEST\n\n${formatGuest(submission)}\n\nA photo of the guest follows.`;
 }
