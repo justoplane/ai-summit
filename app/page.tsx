@@ -26,7 +26,7 @@ export default async function LandingPage() {
         <Hero />
         <StatsStrip headcount={MEMBERS.length} placements={placements} />
         <AboutSection />
-        <section id="leadership" className="mx-auto flex w-full max-w-7xl scroll-mt-24 flex-col gap-8 px-4 py-16 sm:px-6 lg:px-8">
+        <section id="leadership" className="mx-auto flex w-full max-w-[1600px] scroll-mt-24 flex-col gap-8 px-4 py-16 sm:px-6 lg:px-8">
           <ResidentsHeader count={MEMBERS.length} heading="h2" />
           <ResidentGrid members={MEMBERS} tally={tally} />
           <GovernanceNote />

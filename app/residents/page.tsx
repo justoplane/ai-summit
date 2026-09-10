@@ -16,7 +16,7 @@ export default async function ResidentsPage() {
 
   return (
     <HostShell active="residents">
-      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-10 px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col gap-10 px-4 py-8 sm:px-6 lg:px-8">
         <ResidentsHeader count={MEMBERS.length} />
         <ResidentGrid members={MEMBERS} tally={tally} />
         <GovernanceNote />
