@@ -17,8 +17,8 @@ export function HostScreen({ initialState, initialResult }: Props) {
   const { state, result, isNewArrival, error } = useHostState(initialState, initialResult);
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-8 px-6 py-8 xl:flex-row xl:items-start xl:gap-10">
-      <div className="mx-auto flex w-full max-w-2xl flex-col gap-4 xl:sticky xl:top-8 xl:mx-0 xl:w-[500px] xl:max-w-none xl:shrink-0">
+    <div className="mx-auto flex w-full max-w-[1700px] flex-1 flex-col gap-8 px-6 py-8 xl:flex-row xl:items-start xl:gap-10">
+      <div className="mx-auto flex w-full max-w-2xl flex-col gap-4 xl:sticky xl:top-8 xl:mx-0 xl:w-[440px] xl:max-w-none xl:shrink-0 2xl:w-[500px]">
         <QrPanel state={state} />
         <footer className="flex items-center justify-between px-2 font-mono text-xs uppercase tracking-[0.16em] text-muted">
           <Link

@@ -23,7 +23,7 @@ export function LatestMatch({ result, isNewArrival }: Props) {
 
   return (
     // Keyed on the id so every new result remounts: the rise animation and counter replay.
-    <Card key={result.id} featured className={cn("p-8 md:p-10", isNewArrival && "animate-rise")}>
+    <Card key={result.id} featured className={cn("p-6 md:p-8", isNewArrival && "animate-rise")}>
       {isNewArrival && <RevealConfetti resultId={result.id} />}
 
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -35,7 +35,7 @@ export function LatestMatch({ result, isNewArrival }: Props) {
         </span>
       </div>
 
-      <div className="mt-8 grid grid-cols-1 items-center gap-6 sm:grid-cols-[1fr_auto_1fr] md:gap-8">
+      <div className="mt-6 grid grid-cols-1 items-center gap-6 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:gap-8">
         <Portrait
           src={result.submitter.photoUrl}
           name={result.submitter.name}
@@ -65,10 +65,10 @@ export function LatestMatch({ result, isNewArrival }: Props) {
         />
       </div>
 
-      <h2 className="mt-10 font-display text-4xl font-bold leading-tight tracking-tight md:text-5xl">
+      <h2 className="mt-8 font-display text-3xl font-bold leading-tight tracking-tight md:text-4xl 2xl:text-5xl">
         {result.verdict.headline}
       </h2>
-      <p className="mt-4 max-w-[65ch] text-lg leading-relaxed text-foreground/85 md:text-xl">
+      <p className="mt-3 max-w-[65ch] text-lg leading-relaxed text-foreground/85 2xl:text-xl">
         {result.verdict.rationale}
       </p>
 

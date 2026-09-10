@@ -31,9 +31,9 @@ export function ScoreCounter({ score, animate }: Props) {
 
   return (
     <span className="font-display font-bold leading-none tracking-tighter">
-      <span aria-hidden className="text-gradient text-7xl tabular-nums md:text-8xl lg:text-9xl">
+      <span aria-hidden className="text-gradient text-6xl tabular-nums md:text-7xl 2xl:text-8xl">
         {shown}
-        <span className="text-4xl md:text-5xl">%</span>
+        <span className="text-3xl md:text-4xl">%</span>
       </span>
       <span className="sr-only">{score} percent</span>
     </span>

@@ -13,7 +13,7 @@ type Props = {
 export function Portrait({ src, name, label, caption, unoptimized }: Props) {
   return (
     <figure className="flex min-w-0 flex-col items-center gap-3 text-center">
-      <div className="glow relative size-40 overflow-hidden rounded-3xl border border-border bg-surface-strong md:size-52 lg:size-60">
+      <div className="glow relative aspect-square w-full max-w-40 overflow-hidden rounded-3xl border border-border bg-surface-strong md:max-w-52 xl:max-w-60">
         <Image
           src={src}
           alt={name}
