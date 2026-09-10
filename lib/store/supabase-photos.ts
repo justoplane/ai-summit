@@ -20,6 +20,16 @@ function parseDataUrl(dataUrl: string): { mime: string; bytes: Buffer } {
   return { mime, bytes: Buffer.from(dataUrl.slice(comma + 1), "base64") };
 }
 
+/** Removes a photo given its public URL. Ignores URLs that don't point at our bucket. */
+export async function deletePhoto(sb: Supabase, photoUrl: string): Promise<void> {
+  const marker = `/object/public/${BUCKET}/`;
+  const at = photoUrl.indexOf(marker);
+  if (at === -1) return;
+  const path = decodeURIComponent(photoUrl.slice(at + marker.length));
+  const { error } = await sb.storage.from(BUCKET).remove([path]);
+  if (error) throw new Error(`[store:supabase] deletePhoto failed: ${error.message}`);
+}
+
 /** Uploads a data URL to the public `photos` bucket and returns a URL the browser can load. */
 export async function uploadPhoto(sb: Supabase, resultId: string, dataUrl: string): Promise<string> {
   const { mime, bytes } = parseDataUrl(dataUrl);

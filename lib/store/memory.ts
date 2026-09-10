@@ -91,6 +91,11 @@ export function createMemoryStore(): Store {
       return { results: page, nextCursor };
     },
 
+    async deleteResult(id) {
+      const i = s.results.findIndex((r) => r.id === id);
+      if (i !== -1) s.results.splice(i, 1);
+    },
+
     async countByMember() {
       const tally = Object.fromEntries(MEMBER_IDS.map((id) => [id, 0])) as MemberTally;
       for (const r of s.results) tally[r.verdict.memberId] += 1;

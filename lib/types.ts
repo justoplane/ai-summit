@@ -115,4 +115,6 @@ export type Store = {
   /** Newest first. `before` is a createdAt ISO string from a previous page's nextCursor. */
   listResults(opts: { limit: number; before?: string }): Promise<ResultPage>;
   countByMember(): Promise<MemberTally>;
+  /** Remove a run and its photo. No-op for unknown ids. */
+  deleteResult(id: string): Promise<void>;
 };

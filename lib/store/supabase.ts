@@ -2,7 +2,7 @@ import { isMemberId, MEMBER_IDS } from "@/content/members";
 import { getSupabase } from "@/lib/supabase";
 import { newToken } from "@/lib/tokens";
 import type { MemberTally, Store } from "@/lib/types";
-import { uploadPhoto } from "./supabase-photos";
+import { deletePhoto, uploadPhoto } from "./supabase-photos";
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -98,6 +98,17 @@ export function createSupabaseStore(): Store {
       const results = data.slice(0, limit).map((row) => row.payload);
       const last = results.at(-1);
       return { results, nextCursor: data.length > limit && last ? last.createdAt : null };
+    },
+
+    async deleteResult(id) {
+      if (!UUID_RE.test(id)) return;
+      const { data, error } = await sb.from("results").select("payload").eq("id", id).maybeSingle();
+      if (error) fail("deleteResult lookup", error);
+      if (!data) return;
+      // Photo cleanup is best-effort; the row is what the ledger shows.
+      await deletePhoto(sb, data.payload.submitter.photoUrl).catch((err) => console.warn("[store:supabase]", err));
+      const del = await sb.from("results").delete().eq("id", id);
+      if (del.error) fail("deleteResult", del.error);
     },
 
     async countByMember() {

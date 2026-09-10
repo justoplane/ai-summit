@@ -5,6 +5,7 @@ import { formatDateTime } from "@/lib/format";
 import { Badge } from "@/components/ui/Badge";
 import { MicroLabel } from "@/components/history/MicroLabel";
 import { ResultDetails } from "@/components/history/ResultDetails";
+import { DeleteRunButton } from "@/components/history/DeleteRunButton";
 
 type Props = { result: MatchResult };
 
@@ -64,6 +65,8 @@ export function ResultRow({ result }: Props) {
               <Badge>{result.model}</Badge>
             </span>
           </span>
+
+          <DeleteRunButton id={result.id} name={submitter.name} />
 
           <svg
             aria-hidden
