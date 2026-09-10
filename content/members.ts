@@ -49,10 +49,10 @@ export const MEMBERS: Member[] = [
   },
   {
     id: "resident-5",
-    name: "Andrew Hobbes",
+    name: "Andrew Hobbs",
     companyTitle: "TODO e.g. Principal Couch Engineer",
     achievement: "TODO — one notable achievement, e.g. Once ate 14 tacos at a standing desk.",
-    photo: "/members/resident-5.jpeg",
+    photo: "/members/resident-5.png",
     description: `TODO — one paragraph about this person.`,
     personalityResults: `TODO — paste the full personality test output here, any format.`,
   },
