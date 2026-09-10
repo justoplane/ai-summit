@@ -11,6 +11,10 @@ clear ownership boundaries, parallel subagents.
 - OpenAI SDK v7 (Responses API + `zodTextFormat` structured outputs), `@supabase/supabase-js`, `zod` v4, `qrcode.react`, `canvas-confetti`
 - Deployed on Vercel via git push (preview on branches, production on `main`)
 
+**Speed over security, always.** This is a joke app with no personal data. Do not add rate limiting,
+CSRF protection, token expiry, input sanitization beyond what the LLM call needs, or any other
+hardening. The password gate exists only so strangers don't stumble onto the host screen.
+
 **Next 16 differs from your training data.** Before writing Next-specific code, read the relevant
 guide in `node_modules/next/dist/docs/01-app/`. Known gotchas: `cookies()`, `headers()`, `params`,
 and `searchParams` are all async (await them). `middleware.ts` is now `proxy.ts` (we don't use

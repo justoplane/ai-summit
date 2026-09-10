@@ -14,3 +14,23 @@ export async function isAuthed(): Promise<boolean> {
 export async function requireAuth(): Promise<void> {
   if (!(await isAuthed())) redirect("/login");
 }
+
+const ONE_YEAR_SECONDS = 60 * 60 * 24 * 365;
+
+/** Route handlers only: cookies can't be written while a Server Component renders. */
+export async function setAuthCookie(): Promise<void> {
+  const store = await cookies();
+  store.set(AUTH_COOKIE, AUTH_COOKIE_VALUE, {
+    httpOnly: true,
+    sameSite: "lax",
+    path: "/",
+    maxAge: ONE_YEAR_SECONDS,
+    secure: process.env.NODE_ENV === "production",
+  });
+}
+
+/** Route handlers only. */
+export async function clearAuthCookie(): Promise<void> {
+  const store = await cookies();
+  store.delete(AUTH_COOKIE);
+}

@@ -1,20 +1,18 @@
 import { requireAuth } from "@/lib/auth";
-import { Card } from "@/components/ui/Card";
-import { GlowText } from "@/components/ui/GlowText";
+import { getStore } from "@/lib/store";
+import { HostScreen } from "@/components/host/HostScreen";
+import { HostShell } from "@/components/chrome/HostShell";
 
 export const dynamic = "force-dynamic";
 
-/** Host display. TODO(agent C): replace with the QR panel + latest match reveal. */
+/** Host display: the QR to scan plus the latest match reveal. Polling lives in HostScreen. */
 export default async function HostPage() {
   await requireAuth();
+  const store = getStore();
+  const [state, latest] = await Promise.all([store.getHostState(), store.getLatestResult()]);
   return (
-    <main className="flex flex-1 items-center justify-center p-8">
-      <Card className="max-w-xl text-center">
-        <h1 className="font-display text-4xl font-bold">
-          <GlowText>Durf Dungeon LLC</GlowText>
-        </h1>
-        <p className="mt-3 text-muted">Host page placeholder. Agent C builds this.</p>
-      </Card>
-    </main>
+    <HostShell active="live">
+      <HostScreen initialState={state} initialResult={latest} />
+    </HostShell>
   );
 }
