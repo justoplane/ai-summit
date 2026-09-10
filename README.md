@@ -23,8 +23,8 @@ The host screen password is `APP_PASSWORD` (default `change-me`).
 
 ## Fill in the residents
 
-Everything about the six residents lives in `content/members.ts`: name, company title, a paragraph
-description, and the raw personality test output. Drop photos in `public/members/` and update the
+Everything about the six residents lives in `content/members.ts`: name, company title, one-line
+achievement, a paragraph description, and the raw personality test output. Drop photos in `public/members/` and update the
 `photo` paths. Trait chips for the phone form are in `content/traits.ts`.
 
 ## Pages

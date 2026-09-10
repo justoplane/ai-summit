@@ -19,6 +19,7 @@ export const MATCH_COPY = {
   subjectLabel: "Subject",
   residentLabel: "Resident",
   scoreLabel: "Compatibility",
+  achievement: "Achievement",
   redFlag: "Red flag",
   runnerUp: "Runner-up",
   model: "Model",

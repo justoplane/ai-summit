@@ -18,6 +18,7 @@ function formatMember(member: Member, index: number): string {
     `${index + 1}. id: ${member.id}`,
     `   name: ${member.name}`,
     `   company title: ${member.companyTitle}`,
+    `   notable achievement: ${member.achievement}`,
     `   description: ${member.description}`,
     `   personality results:`,
     member.personalityResults,

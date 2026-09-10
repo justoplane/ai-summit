@@ -32,6 +32,9 @@ export function TallyCard({ member, count, rank, pct, leader }: Props) {
         <div className="min-w-0">
           <p className="truncate font-semibold">{member.name}</p>
           <p className="truncate text-sm text-muted">{member.companyTitle}</p>
+          <p className="truncate text-xs text-amber" title={member.achievement}>
+            &#9733; {member.achievement}
+          </p>
         </div>
       </div>
 

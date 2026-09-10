@@ -72,7 +72,7 @@ export function LatestMatch({ result, isNewArrival }: Props) {
         {result.verdict.rationale}
       </p>
 
-      <MatchBadges result={result} runnerUpName={runnerUp.name} />
+      <MatchBadges result={result} runnerUpName={runnerUp.name} achievement={member.achievement} />
     </Card>
   );
 }

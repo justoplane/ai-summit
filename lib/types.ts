@@ -18,6 +18,8 @@ export type Member = {
   companyTitle: string;
   /** Path under /public (e.g. "/members/resident-1.jpg") or an absolute URL. */
   photo: string;
+  /** One notable (ideally absurd) accomplishment. Shown on the reveal and the leaderboard. */
+  achievement: string;
   /** One paragraph about the person. */
   description: string;
   /** Raw personality test output, any format. Sent verbatim to the LLM. */

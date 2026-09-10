@@ -8,6 +8,7 @@ type Props = { result: MatchResult };
 /** The expanded body of a ledger row. */
 export function ResultDetails({ result }: Props) {
   const { submitter, verdict } = result;
+  const member = getMember(verdict.memberId);
   const runnerUp = getMember(verdict.runnerUpId);
 
   return (
@@ -22,6 +23,12 @@ export function ResultDetails({ result }: Props) {
             Red flag
           </Badge>
           <p className="text-sm leading-relaxed">{verdict.redFlag}</p>
+        </div>
+        <div>
+          <MicroLabel className="block">Resident achievement</MicroLabel>
+          <p className="mt-1 text-sm">
+            <span className="text-amber">&#9733;</span> {member.achievement}
+          </p>
         </div>
         <div>
           <MicroLabel className="block">Runner-up</MicroLabel>

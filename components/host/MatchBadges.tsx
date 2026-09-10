@@ -6,15 +6,21 @@ import { TimeAgo } from "./TimeAgo";
 type Props = {
   result: MatchResult;
   runnerUpName: string;
+  /** The matched resident's notable achievement. */
+  achievement: string;
 };
 
 /** Badge defaults to 11px; the inner spans bump it so it reads from a couch. */
 const readable = "text-xs md:text-sm";
 
-export function MatchBadges({ result, runnerUpName }: Props) {
+export function MatchBadges({ result, runnerUpName, achievement }: Props) {
   return (
     <div className="mt-8 flex flex-col gap-3">
       <div className="flex flex-wrap items-center gap-2">
+        <Badge tone="amber">
+          <span className={readable}>{MATCH_COPY.achievement}</span>
+          <span className="font-sans text-sm normal-case tracking-normal md:text-base">{achievement}</span>
+        </Badge>
         <Badge tone="magenta">
           <span className={readable}>{MATCH_COPY.redFlag}</span>
           <span className="font-sans text-sm normal-case tracking-normal md:text-base">{result.verdict.redFlag}</span>
