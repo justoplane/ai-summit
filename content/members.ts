@@ -35,7 +35,7 @@ export const MEMBERS: Member[] = [
     companyTitle: "Chief Arcteryx Officer, Chief Mogging Officer",
     achievement: "Owns 4k+ worth of Arcteryx gear, all acquired at 60-80% below retail.",
     photo: "/members/resident-3.jpeg",
-    description: `Carter loves bouldering, fishing, snowboarding, and pickleball. He loves the movie Talladega nights and the movie zoolander. He is a finance and accounting student planning on going to law school. Enjoys a deep conversation. He likes laughing at dumb jokes. The dumber the joke the better. He hopes to emulate Ryan gosling one day`,
+    description: `Cbraz excels in his role as Chief Arc’teryx and Mogging Officer. As a member of the dungeon board since its inception, he has cultivated an expertise in flaunting his clothing in a particularly tasteful and pretentious way. His hobbies range from opening doors for women to climbing V4. As a sign language and LetterBoxd enthusiast, he enjoys the finer things in life.`,
     personalityResults: `ENTJ-A`,
   },
   {
