@@ -1,4 +1,4 @@
-import type { Submission } from "@/lib/types";
+import type { MatchVerdict, Submission } from "@/lib/types";
 
 export type VisitOutcome =
   | { kind: "open"; visitId: string; codeName: string }
@@ -6,7 +6,7 @@ export type VisitOutcome =
   | { kind: "offline" };
 
 export type SubmitOutcome =
-  | { kind: "done"; resultId: string }
+  | { kind: "done"; resultId: string; verdict: MatchVerdict }
   | { kind: "used"; message: string }
   | { kind: "error"; message: string };
 
@@ -45,8 +45,12 @@ export async function submitEntry(submission: Submission): Promise<SubmitOutcome
     return { kind: "error", message: "We could not reach the office. Check your connection and try again." };
   }
 
-  const body = (await res.json().catch(() => null)) as { resultId?: string; error?: string } | null;
-  if (res.ok && body?.resultId) return { kind: "done", resultId: body.resultId };
+  const body = (await res.json().catch(() => null)) as
+    | { resultId?: string; verdict?: MatchVerdict; error?: string }
+    | null;
+  if (res.ok && body?.resultId && body.verdict) {
+    return { kind: "done", resultId: body.resultId, verdict: body.verdict };
+  }
   if (res.status === 409) {
     return { kind: "used", message: body?.error ?? "This application was already submitted" };
   }

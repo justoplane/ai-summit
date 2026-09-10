@@ -21,7 +21,8 @@ const SubmissionSchema = z.object({
 
 /**
  * Phone posts a Submission. Validates the visit, runs the match, stores the result
- * attributed to the visit's intake code. Response: { resultId } or { error }.
+ * attributed to the visit's intake code. Response: { resultId, verdict } or { error }.
+ * The verdict rides along so the phone can show the match without a second round trip.
  */
 export async function POST(request: Request) {
   const parsed = SubmissionSchema.safeParse(await request.json().catch(() => null));
@@ -59,7 +60,7 @@ export async function POST(request: Request) {
     };
     await store.saveResult(result);
     await store.setVisitStatus(visit.id, "done");
-    return Response.json({ resultId: id });
+    return Response.json({ resultId: id, verdict });
   } catch (err) {
     console.error("[submit] failed", err);
     // Let the same phone retry.

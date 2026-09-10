@@ -2,6 +2,7 @@ import type { IntakeCode, MatchResult } from "@/lib/types";
 import { getMember } from "@/content/members";
 import { Badge } from "@/components/ui/Badge";
 import { MicroLabel } from "@/components/history/MicroLabel";
+import { TitleChips } from "@/components/ui/TitleChips";
 import { codeLabel } from "@/components/history/codeLabel";
 
 type Props = {
@@ -37,9 +38,8 @@ export function ResultDetails({ result, code }: Props) {
         </div>
         <div>
           <MicroLabel className="block">Also considered</MicroLabel>
-          <p className="mt-1 text-sm">
-            {runnerUp.name} <span className="text-muted">· {runnerUp.companyTitle}</span>
-          </p>
+          <p className="mt-1 text-sm">{runnerUp.name}</p>
+          <TitleChips titles={runnerUp.companyTitle} className="mt-1.5" />
         </div>
       </div>
 

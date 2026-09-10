@@ -22,3 +22,11 @@ export function timeAgo(iso: string, now = Date.now()): string {
   if (h < 24) return `${h}h ago`;
   return `${Math.round(h / 24)}d ago`;
 }
+
+/** "Chief A, Chief B,Groundskeeper" -> ["Chief A", "Chief B", "Groundskeeper"]. */
+export function splitTitles(companyTitle: string): string[] {
+  return companyTitle
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean);
+}

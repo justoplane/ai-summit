@@ -62,7 +62,7 @@ export function LatestMatch({ result, codes, isNewArrival }: Props) {
         <Portrait
           src={member.photo}
           name={member.name}
-          caption={member.companyTitle}
+          titles={member.companyTitle}
           label={MATCH_COPY.residentLabel}
         />
       </div>

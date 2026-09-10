@@ -3,6 +3,7 @@ import type { Member } from "@/lib/types";
 import { parseTypeCode } from "@/lib/match/personality";
 import { Badge } from "@/components/ui/Badge";
 import { MicroLabel } from "@/components/history/MicroLabel";
+import { TitleChips } from "@/components/ui/TitleChips";
 
 type Props = { member: Member; index: number; placements: number };
 
@@ -35,7 +36,7 @@ export function ResidentCard({ member, index, placements }: Props) {
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <h2 className="truncate font-display text-2xl font-bold tracking-tight">{member.name}</h2>
-            <p className="mt-0.5 text-sm leading-snug text-muted">{member.companyTitle}</p>
+            <TitleChips titles={member.companyTitle} className="mt-1.5" />
           </div>
           <Badge tone="cyan" className="shrink-0">
             {assessment}

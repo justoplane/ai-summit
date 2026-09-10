@@ -5,6 +5,7 @@ import { formatDateTime } from "@/lib/format";
 import { Badge } from "@/components/ui/Badge";
 import { MicroLabel } from "@/components/history/MicroLabel";
 import { ResultDetails } from "@/components/history/ResultDetails";
+import { TitleChips } from "@/components/ui/TitleChips";
 import { DeleteRunButton } from "@/components/history/DeleteRunButton";
 import { codeLabel } from "@/components/history/codeLabel";
 
@@ -50,9 +51,9 @@ export function ResultRow({ result, code }: Props) {
                 height={56}
                 className="size-14 shrink-0 rounded-2xl object-cover"
               />
-              <span className="min-w-0 md:max-w-40">
+              <span className="min-w-0 md:max-w-64">
                 <span className="block truncate font-semibold">{member.name}</span>
-                <span className="block truncate text-sm text-muted">{member.companyTitle}</span>
+                <TitleChips titles={member.companyTitle} max={2} className="mt-1" />
               </span>
             </span>
           </span>

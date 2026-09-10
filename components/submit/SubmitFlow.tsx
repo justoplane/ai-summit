@@ -1,13 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { MatchVerdict } from "@/lib/types";
 import { openVisit, submitEntry } from "./api";
 import { EMPTY_DRAFT, toSubmission, type Draft } from "./draft";
 import { SubmitForm } from "./SubmitForm";
 import { SubmitShell } from "./SubmitShell";
 import { ClaimingScreen } from "./screens/ClaimingScreen";
-import { DoneScreen } from "./screens/DoneScreen";
 import { InvalidScreen } from "./screens/InvalidScreen";
+import { MatchedScreen } from "./screens/MatchedScreen";
 import { OfflineScreen } from "./screens/OfflineScreen";
 import { ProcessingScreen } from "./screens/ProcessingScreen";
 import { UsedScreen } from "./screens/UsedScreen";
@@ -18,7 +19,7 @@ type Phase =
   | { kind: "claiming" }
   | { kind: "form"; visit: Visit; error?: string }
   | { kind: "submitting"; visit: Visit }
-  | { kind: "done"; resultId: string }
+  | { kind: "done"; resultId: string; verdict: MatchVerdict }
   | { kind: "used" }
   | { kind: "invalid" }
   | { kind: "offline" };
@@ -54,7 +55,9 @@ export function SubmitFlow({ slug }: Props) {
   async function submit(visit: Visit) {
     setPhase({ kind: "submitting", visit });
     const outcome = await submitEntry(toSubmission(draft, visit.visitId));
-    if (outcome.kind === "done") setPhase({ kind: "done", resultId: outcome.resultId });
+    if (outcome.kind === "done") {
+      setPhase({ kind: "done", resultId: outcome.resultId, verdict: outcome.verdict });
+    }
     // The server says "expired" for an unknown visit and "already submitted" for a reused one.
     else if (outcome.kind === "used") setPhase({ kind: /expired/i.test(outcome.message) ? "invalid" : "used" });
     else setPhase({ kind: "form", visit, error: outcome.message });
@@ -73,7 +76,7 @@ export function SubmitFlow({ slug }: Props) {
         />
       )}
       {phase.kind === "submitting" && <ProcessingScreen />}
-      {phase.kind === "done" && <DoneScreen />}
+      {phase.kind === "done" && <MatchedScreen resultId={phase.resultId} verdict={phase.verdict} />}
       {phase.kind === "used" && <UsedScreen />}
       {phase.kind === "invalid" && <InvalidScreen />}
       {phase.kind === "offline" && <OfflineScreen onRetry={retryOpen} />}
