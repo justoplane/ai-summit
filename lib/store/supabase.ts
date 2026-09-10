@@ -4,6 +4,9 @@ import { newToken } from "@/lib/tokens";
 import type { MemberTally, Store } from "@/lib/types";
 import { deletePhoto, uploadPhoto } from "./supabase-photos";
 
+/** Flags are sentinel rows in `tokens` ("flag:<name>", status done) so no migration is needed. */
+const flagToken = (name: string) => `flag:${name}`;
+
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 function fail(op: string, error: { message: string }): never {
@@ -20,15 +23,22 @@ export function createSupabaseStore(): Store {
 
   return {
     async getHostState() {
-      const [active, pending, latest] = await Promise.all([
+      const [active, pending, latest, flag] = await Promise.all([
         sb.rpc("ensure_active_token", { p_candidate: newToken() }),
         sb.from("tokens").select("*", { count: "exact", head: true }).eq("status", "processing"),
         sb.from("results").select("id").order("created_at", { ascending: false }).limit(1).maybeSingle(),
+        sb.from("tokens").select("token").eq("token", flagToken("shlayteMaxxing")).maybeSingle(),
       ]);
       if (active.error) fail("ensure_active_token", active.error);
       if (pending.error) fail("count pending tokens", pending.error);
       if (latest.error) fail("latest result id", latest.error);
-      return { activeToken: active.data, pending: pending.count ?? 0, latestResultId: latest.data?.id ?? null };
+      if (flag.error) fail("read flag", flag.error);
+      return {
+        activeToken: active.data,
+        pending: pending.count ?? 0,
+        latestResultId: latest.data?.id ?? null,
+        shlayteMaxxing: flag.data !== null,
+      };
     },
 
     async claimToken(token) {
@@ -98,6 +108,20 @@ export function createSupabaseStore(): Store {
       const results = data.slice(0, limit).map((row) => row.payload);
       const last = results.at(-1);
       return { results, nextCursor: data.length > limit && last ? last.createdAt : null };
+    },
+
+    async getFlag(name) {
+      const { data, error } = await sb.from("tokens").select("token").eq("token", flagToken(name)).maybeSingle();
+      if (error) fail("getFlag", error);
+      return data !== null;
+    },
+
+    async setFlag(name, on) {
+      const token = flagToken(name);
+      const { error } = on
+        ? await sb.from("tokens").upsert({ token, status: "done" })
+        : await sb.from("tokens").delete().eq("token", token);
+      if (error) fail("setFlag", error);
     },
 
     async deleteResult(id) {

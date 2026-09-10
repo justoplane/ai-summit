@@ -7,6 +7,7 @@ import type { HostState, MatchResult, MemberTally } from "@/lib/types";
 
 export const MOCK_HOST_STATE: HostState = {
   activeToken: "k7m2p9qa",
+  shlayteMaxxing: false,
   pending: 1,
   latestResultId: "mock-1",
 };

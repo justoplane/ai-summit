@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { MEMBERS } from "@/content/members";
+import { MEMBERS, SHLAYTE_MEMBER_ID } from "@/content/members";
 import { MAX_TRAITS } from "@/content/traits";
 import { matchSubmission } from "@/lib/match";
 import { getStore } from "@/lib/store";
@@ -40,8 +40,9 @@ export async function POST(request: Request) {
   await store.setTokenStatus(submission.token, "processing");
   try {
     const id = newId();
+    const forceMemberId = (await store.getFlag("shlayteMaxxing")) ? SHLAYTE_MEMBER_ID : undefined;
     const [{ verdict, model }, photoUrl] = await Promise.all([
-      matchSubmission({ submission, members: MEMBERS }),
+      matchSubmission({ submission, members: MEMBERS, forceMemberId }),
       store.savePhoto(id, submission.photoDataUrl),
     ]);
     const result: MatchResult = {

@@ -1,8 +1,8 @@
 import OpenAI from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
 import { env } from "@/lib/env";
-import type { MatchVerdict, Member, Submission } from "@/lib/types";
-import { SYSTEM_PROMPT, buildUserText } from "./prompt";
+import type { MatchVerdict, Member, MemberId, Submission } from "@/lib/types";
+import { SYSTEM_PROMPT, buildUserText, forcedDecisionNote } from "./prompt";
 import { VerdictSchema, normalizeVerdict } from "./schema";
 
 // Stays under the submit route's 60s maxDuration. SDK retries are disabled because
@@ -35,11 +35,15 @@ function describeFailure(response: OpenAI.Responses.Response): string {
 }
 
 /** Ask OpenAI for a structured verdict. Throws on API error, refusal, or unparseable output. */
-export async function openaiMatch(submission: Submission, members: Member[]): Promise<MatchVerdict> {
+export async function openaiMatch(
+  submission: Submission,
+  members: Member[],
+  forceMemberId?: MemberId,
+): Promise<MatchVerdict> {
   const response = await getClient().responses.parse(
     {
       model: env.openaiModel,
-      instructions: SYSTEM_PROMPT,
+      instructions: forceMemberId ? `${SYSTEM_PROMPT}\n\n${forcedDecisionNote(members, forceMemberId)}` : SYSTEM_PROMPT,
       input: [
         {
           role: "user",

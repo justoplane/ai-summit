@@ -7,6 +7,7 @@ import { HOST_COPY } from "./copy";
 import { LatestMatch } from "./LatestMatch";
 import { QrPanel } from "./QrPanel";
 import { useHostState } from "./useHostState";
+import { ShlayteToggle } from "./ShlayteToggle";
 
 type Props = {
   initialState: HostState;
@@ -27,11 +28,14 @@ export function HostScreen({ initialState, initialResult }: Props) {
           >
             {HOST_COPY.ledgerLink} &rarr;
           </Link>
-          {error && (
-            <Badge tone="amber" live>
-              {HOST_COPY.reconnecting}
-            </Badge>
-          )}
+          <span className="flex items-center gap-2">
+            {error && (
+              <Badge tone="amber" live>
+                {HOST_COPY.reconnecting}
+              </Badge>
+            )}
+            <ShlayteToggle on={state.shlayteMaxxing} />
+          </span>
         </footer>
       </div>
 

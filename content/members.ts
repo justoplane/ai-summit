@@ -67,6 +67,9 @@ export const MEMBERS: Member[] = [
   },
 ];
 
+/** ShlayteMaxxing mode forces every match to this resident. */
+export const SHLAYTE_MEMBER_ID: MemberId = "resident-2";
+
 export const MEMBER_IDS = MEMBERS.map((m) => m.id) as [MemberId, ...MemberId[]];
 
 const byId = new Map(MEMBERS.map((m) => [m.id, m]));

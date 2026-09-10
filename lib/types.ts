@@ -78,8 +78,13 @@ export type MatchResult = {
 };
 
 /** Polled by the host page every couple of seconds. Keep it tiny. */
+/** Operator toggles. Stored server-side so the phone's submission sees them. */
+export type FlagName = "shlayteMaxxing";
+
 export type HostState = {
   activeToken: string;
+  /** Hidden host toggle: force every match to resident-2. */
+  shlayteMaxxing: boolean;
   /** Submissions currently waiting on the LLM. */
   pending: number;
   latestResultId: string | null;
@@ -117,4 +122,6 @@ export type Store = {
   countByMember(): Promise<MemberTally>;
   /** Remove a run and its photo. No-op for unknown ids. */
   deleteResult(id: string): Promise<void>;
+  getFlag(name: FlagName): Promise<boolean>;
+  setFlag(name: FlagName, on: boolean): Promise<void>;
 };

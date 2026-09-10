@@ -6,6 +6,7 @@ type MemoryState = {
   tokens: Map<string, { status: TokenStatus; createdAt: number }>;
   /** Oldest first. */
   results: MatchResult[];
+  flags: Set<string>;
 };
 
 declare global {
@@ -15,7 +16,7 @@ declare global {
 
 function state(): MemoryState {
   if (!globalThis.__durfMemoryState) {
-    globalThis.__durfMemoryState = { tokens: new Map(), results: [] };
+    globalThis.__durfMemoryState = { tokens: new Map(), results: [], flags: new Set() };
   }
   return globalThis.__durfMemoryState;
 }
@@ -44,7 +45,12 @@ export function createMemoryStore(): Store {
       let pending = 0;
       for (const entry of s.tokens.values()) if (entry.status === "processing") pending++;
       const latest = s.results[s.results.length - 1];
-      return { activeToken: token, pending, latestResultId: latest?.id ?? null };
+      return {
+        activeToken: token,
+        pending,
+        latestResultId: latest?.id ?? null,
+        shlayteMaxxing: s.flags.has("shlayteMaxxing"),
+      };
     },
 
     async claimToken(token) {
@@ -89,6 +95,15 @@ export function createMemoryStore(): Store {
       const last = page[page.length - 1];
       const nextCursor = items.length > limit && last ? last.createdAt : null;
       return { results: page, nextCursor };
+    },
+
+    async getFlag(name) {
+      return s.flags.has(name);
+    },
+
+    async setFlag(name, on) {
+      if (on) s.flags.add(name);
+      else s.flags.delete(name);
     },
 
     async deleteResult(id) {
