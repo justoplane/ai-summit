@@ -15,16 +15,16 @@ export const VerdictSchema = z.object({
   score: z
     .number()
     .describe(`Compatibility score as an integer from ${SCORE_MIN} to ${SCORE_MAX}. It's a party; nobody scores low.`),
-  headline: z.string().describe("At most 12 words. Punchy startup-launch speak announcing the match."),
+  headline: z.string().describe("At most 12 words. A fake tabloid or trade-press headline about this specific pairing. Specific, not buzzwordy."),
   rationale: z
     .string()
     .describe(
-      "2 to 4 sentences. Reference at least two specific things from the guest's traits or description and at least one thing from the chosen resident's profile. Name the resident with their company title exactly once.",
+      "2 to 4 sentences, deadpan. At least two specifics from the guest and two from the chosen resident, plus one invented concrete scene stated as fact. First names only.",
     ),
   runnerUpId: z
     .enum(MEMBER_IDS)
     .describe("The id of the second most compatible resident. Must be different from memberId."),
-  redFlag: z.string().describe("One playful, harmless sentence about a minor concern with the pairing."),
+  redFlag: z.string().describe("One sentence: a specific, escalating consequence of the pairing. Harmless, never cruel."),
 });
 
 export type RawVerdict = z.infer<typeof VerdictSchema>;
