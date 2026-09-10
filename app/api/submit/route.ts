@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 const SubmissionSchema = z.object({
-  token: z.string().min(1),
+  visitId: z.string().min(1),
   name: z.string().trim().min(1).max(40),
   traits: z.array(z.string().max(40)).max(MAX_TRAITS),
   description: z.string().trim().min(1).max(600),
@@ -20,8 +20,8 @@ const SubmissionSchema = z.object({
 });
 
 /**
- * Phone posts a Submission. Validates, runs the match, stores the result.
- * Response: { resultId } or { error }.
+ * Phone posts a Submission. Validates the visit, runs the match, stores the result
+ * attributed to the visit's intake code. Response: { resultId } or { error }.
  */
 export async function POST(request: Request) {
   const parsed = SubmissionSchema.safeParse(await request.json().catch(() => null));
@@ -31,25 +31,24 @@ export async function POST(request: Request) {
   const submission = parsed.data;
   const store = getStore();
 
-  const status = await store.getTokenStatus(submission.token);
-  if (status !== "claimed") {
-    const error = status ? "This link was already used" : "Invalid or expired link";
-    return Response.json({ error }, { status: 409 });
-  }
+  const visit = await store.getVisit(submission.visitId);
+  if (!visit) return Response.json({ error: "This link has expired" }, { status: 409 });
+  if (visit.status !== "opened") return Response.json({ error: "This application was already submitted" }, { status: 409 });
 
-  await store.setTokenStatus(submission.token, "processing");
+  await store.setVisitStatus(visit.id, "processing");
   try {
     const id = newId();
-    const forceMemberId = (await store.getFlag("shlayteMaxxing")) ? SHLAYTE_MEMBER_ID : undefined;
+    const forceMemberId = (await store.getSetting("shlayte_maxxing")) === "1" ? SHLAYTE_MEMBER_ID : undefined;
     const [{ verdict, model }, photoUrl] = await Promise.all([
       matchSubmission({ submission, members: MEMBERS, forceMemberId }),
       store.savePhoto(id, submission.photoDataUrl),
     ]);
     const result: MatchResult = {
       id,
-      token: submission.token,
       createdAt: new Date().toISOString(),
       model,
+      codeId: visit.codeId,
+      visitId: visit.id,
       submitter: {
         name: submission.name,
         traits: submission.traits,
@@ -59,12 +58,12 @@ export async function POST(request: Request) {
       verdict,
     };
     await store.saveResult(result);
-    await store.setTokenStatus(submission.token, "done");
+    await store.setVisitStatus(visit.id, "done");
     return Response.json({ resultId: id });
   } catch (err) {
     console.error("[submit] failed", err);
     // Let the same phone retry.
-    await store.setTokenStatus(submission.token, "claimed");
-    return Response.json({ error: "Compatibility inference failed. Try again." }, { status: 500 });
+    await store.setVisitStatus(visit.id, "opened");
+    return Response.json({ error: "The committee could not reach a decision. Try again." }, { status: 500 });
   }
 }

@@ -17,9 +17,11 @@ type Props = {
   onSubmit: () => void;
   /** Message from a failed submit. Shown inline; the draft is preserved. */
   error?: string;
+  /** Operator name of the intake code this phone scanned, e.g. "Instagram story". */
+  codeName?: string;
 };
 
-export function SubmitForm({ draft, onChange, onSubmit, error }: Props) {
+export function SubmitForm({ draft, onChange, onSubmit, error, codeName }: Props) {
   const [touched, setTouched] = useState<Partial<Record<DraftField, true>>>({});
   const issues = draftIssues(draft);
   const pending = Object.keys(issues).length;
@@ -37,7 +39,9 @@ export function SubmitForm({ draft, onChange, onSubmit, error }: Props) {
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-1 flex-col">
       <div className="animate-rise">
-        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Form DD-1 · Rev. 3</p>
+        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+          Form DD-1 · Rev. 3{codeName && <span className="text-muted/70"> · via {codeName}</span>}
+        </p>
         <h1 className="mt-2 font-display text-3xl font-bold tracking-tight">
           Apply to be <GlowText>matched</GlowText>.
         </h1>

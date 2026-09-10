@@ -1,16 +1,21 @@
 import Image from "next/image";
-import type { MatchResult } from "@/lib/types";
+import type { IntakeCode, MatchResult } from "@/lib/types";
 import { getMember } from "@/content/members";
 import { formatDateTime } from "@/lib/format";
 import { Badge } from "@/components/ui/Badge";
 import { MicroLabel } from "@/components/history/MicroLabel";
 import { ResultDetails } from "@/components/history/ResultDetails";
 import { DeleteRunButton } from "@/components/history/DeleteRunButton";
+import { codeLabel } from "@/components/history/codeLabel";
 
-type Props = { result: MatchResult };
+type Props = {
+  result: MatchResult;
+  /** The intake code this run came through; null when unattributed or unknown. */
+  code: IntakeCode | null;
+};
 
 // <summary> only permits phrasing content, so the row is built from spans.
-export function ResultRow({ result }: Props) {
+export function ResultRow({ result, code }: Props) {
   const { submitter, verdict } = result;
   const member = getMember(verdict.memberId);
 
@@ -63,6 +68,11 @@ export function ResultRow({ result }: Props) {
             <span className="flex items-center gap-2">
               <span className="font-mono text-xs text-muted">{formatDateTime(result.createdAt)}</span>
               <Badge>{result.model}</Badge>
+              {code ? (
+                <Badge tone="violet">{codeLabel(code)}</Badge>
+              ) : (
+                <Badge tone="neutral">Unattributed</Badge>
+              )}
             </span>
           </span>
 
@@ -77,7 +87,7 @@ export function ResultRow({ result }: Props) {
           </svg>
         </summary>
 
-        <ResultDetails result={result} />
+        <ResultDetails result={result} code={code} />
       </details>
     </li>
   );

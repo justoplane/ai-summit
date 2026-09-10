@@ -5,9 +5,9 @@ export function UsedScreen() {
     <StatusScreen
       glyph="↻"
       tone="amber"
-      eyebrow="status: already used"
-      title="This link has been used."
-      body="Scan the code on the display for a new one."
+      eyebrow="status: already submitted"
+      title="This application was already submitted."
+      body="Scan the code again to start a new one."
     />
   );
 }

@@ -27,9 +27,9 @@ export function draftIssues(draft: Draft): Partial<Record<DraftField, string>> {
   return issues;
 }
 
-export function toSubmission(draft: Draft, token: string): Submission {
+export function toSubmission(draft: Draft, visitId: string): Submission {
   return {
-    token,
+    visitId,
     name: draft.name.trim(),
     traits: draft.traits,
     description: draft.description.trim(),

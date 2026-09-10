@@ -7,14 +7,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// `PageProps<"/s/[token]">` only exists after a build regenerates .next/types; this shape is what it resolves to.
-type Props = { params: Promise<{ token: string }> };
+// `PageProps<"/s/[slug]">` only exists after a build regenerates .next/types; this shape is what it resolves to.
+type Props = { params: Promise<{ slug: string }> };
 
 /**
- * Public phone flow. The token is claimed client-side on mount, never here:
- * link prefetchers and bots would otherwise burn tokens.
+ * Public phone flow. The visit is opened client-side on mount, never here:
+ * link prefetchers and bots would otherwise inflate the scan count.
  */
 export default async function SubmitPage({ params }: Props) {
-  const { token } = await params;
-  return <SubmitFlow token={token} />;
+  const { slug } = await params;
+  return <SubmitFlow slug={slug} />;
 }

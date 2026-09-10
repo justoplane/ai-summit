@@ -16,7 +16,7 @@ export function Hero() {
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 pb-16 pt-20 sm:px-6 lg:px-8 lg:pt-28">
         <MicroLabel>Durf Dungeon LLC · Form 10-K · Fiscal year 2026</MicroLabel>
         <h1 className="max-w-4xl font-display text-5xl font-bold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
-          A house that has decided it is a <GlowText>company.</GlowText>
+          Welcome to the <GlowText>Dungeon.</GlowText>
         </h1>
         <p className="max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
           Durf Dungeon LLC provides romantic compatibility services to guests of the house. Applications are

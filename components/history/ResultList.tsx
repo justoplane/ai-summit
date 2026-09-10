@@ -1,10 +1,15 @@
-import type { MatchResult } from "@/lib/types";
+import type { IntakeCode, MatchResult } from "@/lib/types";
 import { MicroLabel } from "@/components/history/MicroLabel";
 import { ResultRow } from "@/components/history/ResultRow";
 
-type Props = { results: MatchResult[] };
+type Props = {
+  results: MatchResult[];
+  codes: Map<string, IntakeCode>;
+  /** True when the ledger is narrowed to one intake code. */
+  filtered?: boolean;
+};
 
-export function ResultList({ results }: Props) {
+export function ResultList({ results, codes, filtered = false }: Props) {
   return (
     <section aria-labelledby="runs-heading" className="flex flex-col gap-5">
       <div className="flex flex-wrap items-end justify-between gap-2">
@@ -17,12 +22,20 @@ export function ResultList({ results }: Props) {
       {results.length === 0 ? (
         <div className="glass flex flex-col items-center gap-2 rounded-3xl px-6 py-14 text-center">
           <MicroLabel>No entries</MicroLabel>
-          <p className="font-display text-xl">No matches on record. The board has been notified.</p>
+          <p className="font-display text-xl">
+            {filtered
+              ? "No matches on record for this code."
+              : "No matches on record. The board has been notified."}
+          </p>
         </div>
       ) : (
         <ol className="flex flex-col gap-3">
           {results.map((result) => (
-            <ResultRow key={result.id} result={result} />
+            <ResultRow
+              key={result.id}
+              result={result}
+              code={result.codeId ? codes.get(result.codeId) ?? null : null}
+            />
           ))}
         </ol>
       )}

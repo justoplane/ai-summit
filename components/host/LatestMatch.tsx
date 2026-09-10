@@ -1,4 +1,4 @@
-import type { MatchResult } from "@/lib/types";
+import type { IntakeCode, MatchResult } from "@/lib/types";
 import { getMember } from "@/content/members";
 import { cn } from "@/lib/cn";
 import { Badge } from "@/components/ui/Badge";
@@ -12,10 +12,12 @@ import { ScoreCounter } from "./ScoreCounter";
 
 type Props = {
   result: MatchResult | null;
+  /** Active codes, to name the one this result came through. */
+  codes: IntakeCode[];
   isNewArrival: boolean;
 };
 
-export function LatestMatch({ result, isNewArrival }: Props) {
+export function LatestMatch({ result, codes, isNewArrival }: Props) {
   if (!result) return <EmptyMatch />;
 
   const member = getMember(result.verdict.memberId);
@@ -72,7 +74,7 @@ export function LatestMatch({ result, isNewArrival }: Props) {
         {result.verdict.rationale}
       </p>
 
-      <MatchBadges result={result} runnerUpName={runnerUp.name} achievement={member.achievement} />
+      <MatchBadges result={result} codes={codes} runnerUpName={runnerUp.name} achievement={member.achievement} />
     </Card>
   );
 }

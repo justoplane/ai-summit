@@ -7,9 +7,15 @@ import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { GlowText } from "@/components/ui/GlowText";
 import { Spinner } from "@/components/ui/Spinner";
+import { CodePicker } from "./CodePicker";
 import { HOST_COPY } from "./copy";
+import { NoCodePanel } from "./NoCodePanel";
 
-type Props = { state: HostState };
+type Props = {
+  state: HostState;
+  /** Poll immediately after an operator change. */
+  refresh: () => void;
+};
 
 const QR_SIZE = 400;
 
@@ -29,9 +35,12 @@ function useOrigin(): string | null {
   );
 }
 
-export function QrPanel({ state }: Props) {
+export function QrPanel({ state, refresh }: Props) {
   const origin = useOrigin();
-  const url = origin ? `${origin}/s/${state.activeToken}` : null;
+  const code = state.floorCode;
+  if (!code) return <NoCodePanel />;
+
+  const url = origin ? `${origin}/s/${code.slug}` : null;
 
   return (
     <Card featured className="flex flex-col items-center gap-6 p-8 text-center">
@@ -43,7 +52,9 @@ export function QrPanel({ state }: Props) {
         {HOST_COPY.headline.lead} <GlowText>{HOST_COPY.headline.glow}</GlowText>
       </h1>
 
-      <div key={state.activeToken} className="glow w-full max-w-[448px] animate-rise rounded-3xl bg-white p-6">
+      <CodePicker state={state} refresh={refresh} />
+
+      <div key={code.id} className="glow w-full max-w-[448px] animate-rise rounded-3xl bg-white p-6">
         <div className="aspect-square w-full">
           {url ? (
             <QRCodeSVG
@@ -62,7 +73,7 @@ export function QrPanel({ state }: Props) {
       </div>
 
       <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
-        {HOST_COPY.tokenLabel} &middot; <span className="text-foreground/80">{state.activeToken}</span>
+        {HOST_COPY.channelLabel} &middot; <span className="text-foreground/80">{code.name}</span>
       </p>
 
       <p className="flex min-h-8 items-center justify-center gap-3 text-xl">

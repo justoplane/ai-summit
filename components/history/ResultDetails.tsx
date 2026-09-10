@@ -1,12 +1,17 @@
-import type { MatchResult } from "@/lib/types";
+import type { IntakeCode, MatchResult } from "@/lib/types";
 import { getMember } from "@/content/members";
 import { Badge } from "@/components/ui/Badge";
 import { MicroLabel } from "@/components/history/MicroLabel";
+import { codeLabel } from "@/components/history/codeLabel";
 
-type Props = { result: MatchResult };
+type Props = {
+  result: MatchResult;
+  /** The intake code this run came through; null when unattributed or unknown. */
+  code: IntakeCode | null;
+};
 
 /** The expanded body of a ledger row. */
-export function ResultDetails({ result }: Props) {
+export function ResultDetails({ result, code }: Props) {
   const { submitter, verdict } = result;
   const member = getMember(verdict.memberId);
   const runnerUp = getMember(verdict.runnerUpId);
@@ -56,6 +61,19 @@ export function ResultDetails({ result }: Props) {
         <div>
           <MicroLabel className="block">Statement</MicroLabel>
           <p className="mt-2 text-sm leading-relaxed text-muted">{submitter.description || "No statement was provided."}</p>
+        </div>
+        <div>
+          <MicroLabel className="block">Source</MicroLabel>
+          {code ? (
+            <p className="mt-1 text-sm">
+              {codeLabel(code)}
+              {result.visitId && (
+                <span className="ml-2 font-mono text-xs text-muted">visit {result.visitId.slice(0, 8)}</span>
+              )}
+            </p>
+          ) : (
+            <p className="mt-1 text-sm text-muted">Unattributed</p>
+          )}
         </div>
       </div>
     </div>

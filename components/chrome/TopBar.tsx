@@ -3,12 +3,13 @@ import { cn } from "@/lib/cn";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 
-type Props = { active: "live" | "history" | "residents" };
+type Props = { active: "live" | "history" | "residents" | "settings" };
 
 const links = [
   { key: "live", href: "/floor", label: "Floor" },
   { key: "history", href: "/history", label: "Ledger" },
   { key: "residents", href: "/residents", label: "Leadership" },
+  { key: "settings", href: "/settings", label: "Settings" },
 ] as const;
 
 export function TopBar({ active }: Props) {

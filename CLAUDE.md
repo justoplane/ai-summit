@@ -35,17 +35,24 @@ Definition of done for any change: `pnpm lint && pnpm typecheck && pnpm build` a
 
 ## How the app works
 
-- `/login` — password-only form. Compares to `APP_PASSWORD`, sets the `dd_session` cookie (see `lib/auth.ts`).
 - `/` — public landing page: hero, company facts, leadership cards, investor relations, footer. "Sign in" top right.
-- `/floor` — host display (requires cookie). Polls `GET /api/state` every ~2s, renders a QR for `/s/<activeToken>`.
-  When `latestResultId` changes, fetches `GET /api/results/latest` and plays the reveal.
-- `/s/[token]` — phone flow, public. On load `POST /api/token/claim` (retires that QR, mints the next).
-  Form: name, trait chips, description, photo (resized + compressed in the browser). `POST /api/submit`.
-- `/history` — requires cookie. Server Component listing past results newest-first with a per-member tally.
-- `/residents` — requires cookie. "Leadership" page: one card per resident from `content/members.ts` plus placement counts.
-- Token lifecycle: `active -> claimed -> processing -> done`. See `lib/types.ts`.
-- Storage goes through the `Store` interface in `lib/types.ts`. `lib/store/memory.ts` for dev,
-  `lib/store/supabase.ts` for prod, chosen by `getStore()` based on env.
+- `/login` — password-only form. Compares to `APP_PASSWORD`, sets the `dd_session` cookie (see `lib/auth.ts`). Lands on `/floor`.
+- **Intake codes** replace single-use tokens. An `IntakeCode` is a named, reusable QR (`/s/<slug>`). Codes are
+  created, renamed, archived, and analysed on `/settings`. Archiving stops the link; submissions stay attributed.
+- `/floor` — host display (requires cookie). Polls `GET /api/state` (`HostState`), shows the QR for the selected
+  code (setting `floor_code_id`, dropdown above the QR), and reveals the newest result in the followed scope:
+  the selected code only, or every code (setting `floor_follow`). When `latestResultId` changes it fetches
+  `GET /api/results/latest?code=<id>`.
+- `/s/[slug]` — phone flow, public. On load `POST /api/visit` logs a `Visit` (the unique-entry record) and returns
+  `visitId`. Form: name, trait chips, description, photo (compressed in the browser). `POST /api/submit` with the
+  `visitId`; the result stores `codeId` and `visitId`.
+- `/history` — requires cookie. Ledger, newest first, with a source badge per row, a code filter, and a per-member tally.
+- `/settings` — requires cookie. Create codes, rename, copy link, download QR, pick the floor code and follow mode,
+  archive, and see scans/submissions/per-resident analytics per code.
+- `/residents` — requires cookie. Leadership page from `content/members.ts` plus placement counts.
+- Storage goes through the `Store` interface in `lib/types.ts`. `lib/store/memory.ts` for dev, `lib/store/supabase.ts`
+  for prod. `lib/hostState.ts` assembles `HostState` from the store so both implementations share the rules.
+- Operator settings (`floor_code_id`, `floor_follow`, `shlayte_maxxing`) are string key/values via `PATCH /api/settings`.
 - Matching goes through `matchSubmission()` in `lib/match/index.ts`. Falls back to `lib/match/mock.ts` without an API key.
 
 ## Layout
@@ -57,8 +64,9 @@ app/
   login/                    password page (agent E)
   history/                  past results (agent F)
   residents/                leadership page: the six officers with bios and placement counts
-  s/[token]/                phone flow (agent D)
-  api/state, api/token/claim, api/results/latest, api/submit   route handlers (orchestrator)
+  s/[slug]/                 phone flow (agent D)
+  api/state, api/visit, api/submit, api/results/*, api/codes/*, api/settings   route handlers (orchestrator)
+  settings/                 intake code management + analytics
   api/login                 sets the cookie (agent E)
   layout.tsx, globals.css   root layout + design tokens (shared; see below)
 components/
@@ -67,6 +75,7 @@ components/
   submit/                   form, trait picker, photo input (agent D)
   history/                  result rows, tally strip (agent F)
   chrome/                   top bar, ticker, marquee, footer (agent E)
+  settings/                 code table, create form, QR download, floor selector
   landing/                  public landing page sections
 content/
   members.ts                the six residents (placeholders; the owner fills these in)

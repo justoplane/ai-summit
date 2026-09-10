@@ -7,7 +7,7 @@ export function InvalidScreen() {
       tone="magenta"
       eyebrow="status: expired"
       title="This link has expired."
-      body="Scan the code on the display for a new one."
+      body="Ask the officers for a current link."
     />
   );
 }

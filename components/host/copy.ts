@@ -3,10 +3,20 @@
 export const HOST_COPY = {
   liveBadge: "Intake open",
   headline: { lead: "Scan to get", glow: "matched." },
-  tokenLabel: "Intake reference",
+  channelLabel: "Channel",
+  pickerLabel: "Displaying",
+  followLabel: "Reveal follows",
+  followCode: "This code",
+  followAll: "All codes",
   awaiting: "Awaiting the next submission",
   ledgerLink: "View the ledger",
   reconnecting: "Reconnecting",
+  noCode: {
+    badge: "Intake paused",
+    headline: { lead: "No intake code", glow: "is active." },
+    sub: "The floor has nothing to display until an intake code exists. Provisioning takes one click and zero approvals.",
+    cta: "Create one in Settings",
+  },
   metrics: [
     { label: "Headcount", value: "6" },
     { label: "Facilities", value: "1" },
@@ -24,6 +34,9 @@ export const MATCH_COPY = {
   redFlag: "Risk factor",
   runnerUp: "Also considered",
   model: "Model",
+  via: "Via",
+  unattributed: "Unattributed",
+  retiredCode: "Retired code",
 } as const;
 
 export const EMPTY_COPY = {

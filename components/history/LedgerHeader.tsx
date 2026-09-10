@@ -1,8 +1,15 @@
 import Link from "next/link";
+import type { IntakeCode } from "@/lib/types";
 import { GlowText } from "@/components/ui/GlowText";
 import { MicroLabel } from "@/components/history/MicroLabel";
+import { CodeFilter } from "@/components/history/CodeFilter";
 
-export function LedgerHeader() {
+type Props = {
+  codes: IntakeCode[];
+  selectedCodeId?: string;
+};
+
+export function LedgerHeader({ codes, selectedCodeId }: Props) {
   return (
     <header className="flex flex-wrap items-end justify-between gap-4">
       <div>
@@ -14,12 +21,15 @@ export function LedgerHeader() {
           Every match on record. This ledger is not audited. Nothing here is.
         </p>
       </div>
-      <Link
-        href="/floor"
-        className="rounded-full font-mono text-xs uppercase tracking-[0.14em] text-muted transition hover:text-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/70"
-      >
-        ← Live display
-      </Link>
+      <div className="flex flex-wrap items-end gap-5">
+        <CodeFilter codes={codes} selectedCodeId={selectedCodeId} />
+        <Link
+          href="/floor"
+          className="mb-2.5 rounded-full font-mono text-xs uppercase tracking-[0.14em] text-muted transition hover:text-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/70"
+        >
+          ← Live display
+        </Link>
+      </div>
     </header>
   );
 }

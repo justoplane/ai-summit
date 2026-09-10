@@ -1,10 +1,12 @@
-import type { MatchResult } from "@/lib/types";
+import type { IntakeCode, MatchResult } from "@/lib/types";
 import { Badge } from "@/components/ui/Badge";
 import { MATCH_COPY } from "./copy";
 import { TimeAgo } from "./TimeAgo";
 
 type Props = {
   result: MatchResult;
+  /** Active codes; the result's code may be archived (absent) or null (predates codes). */
+  codes: IntakeCode[];
   runnerUpName: string;
   /** The matched resident's notable achievement. */
   achievement: string;
@@ -13,7 +15,12 @@ type Props = {
 /** Badge defaults to 11px; the inner spans bump it so it reads from a couch. */
 const readable = "text-xs md:text-sm";
 
-export function MatchBadges({ result, runnerUpName, achievement }: Props) {
+function sourceName(codeId: string | null, codes: IntakeCode[]): string {
+  if (codeId === null) return MATCH_COPY.unattributed;
+  return codes.find((c) => c.id === codeId)?.name ?? MATCH_COPY.retiredCode;
+}
+
+export function MatchBadges({ result, codes, runnerUpName, achievement }: Props) {
   return (
     <div className="mt-8 flex flex-col gap-3">
       <div className="flex flex-wrap items-center gap-2">
@@ -28,6 +35,11 @@ export function MatchBadges({ result, runnerUpName, achievement }: Props) {
         <Badge tone="violet">
           <span className={readable}>
             {MATCH_COPY.runnerUp}: {runnerUpName}
+          </span>
+        </Badge>
+        <Badge tone="cyan">
+          <span className={readable}>
+            {MATCH_COPY.via} &middot; {sourceName(result.codeId, codes)}
           </span>
         </Badge>
         <Badge>

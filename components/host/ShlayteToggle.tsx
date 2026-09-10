@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/cn";
+import { patchSettings } from "./settings";
 
 type Props = { on: boolean };
 
@@ -16,17 +17,8 @@ export function ShlayteToggle({ on }: Props) {
 
   async function toggle(next: boolean) {
     setPending(next);
-    try {
-      await fetch("/api/flags", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ name: "shlayteMaxxing", on: next }),
-      });
-    } catch (err) {
-      console.error("[flags]", err);
-    } finally {
-      setPending(null);
-    }
+    await patchSettings({ shlayteMaxxing: next });
+    setPending(null);
   }
 
   return (

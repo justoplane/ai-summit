@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { claimToken, submitEntry } from "./api";
+import { openVisit, submitEntry } from "./api";
 import { EMPTY_DRAFT, toSubmission, type Draft } from "./draft";
 import { SubmitForm } from "./SubmitForm";
 import { SubmitShell } from "./SubmitShell";
@@ -12,58 +12,71 @@ import { OfflineScreen } from "./screens/OfflineScreen";
 import { ProcessingScreen } from "./screens/ProcessingScreen";
 import { UsedScreen } from "./screens/UsedScreen";
 
+type Visit = { visitId: string; codeName: string };
+
 type Phase =
   | { kind: "claiming" }
-  | { kind: "form"; error?: string }
-  | { kind: "submitting" }
+  | { kind: "form"; visit: Visit; error?: string }
+  | { kind: "submitting"; visit: Visit }
   | { kind: "done"; resultId: string }
   | { kind: "used" }
   | { kind: "invalid" }
   | { kind: "offline" };
 
-type Props = { token: string };
+type Props = { slug: string };
 
-export function SubmitFlow({ token }: Props) {
+export function SubmitFlow({ slug }: Props) {
   const [phase, setPhase] = useState<Phase>({ kind: "claiming" });
   const [draft, setDraft] = useState<Draft>(EMPTY_DRAFT);
-  const claimStarted = useRef(false);
+  const openStarted = useRef(false);
 
-  const claim = useCallback(async () => {
-    const outcome = await claimToken(token);
-    setPhase(outcome === "claimed" ? { kind: "form" } : { kind: outcome });
-  }, [token]);
+  const open = useCallback(async () => {
+    const outcome = await openVisit(slug);
+    if (outcome.kind === "open") {
+      setPhase({ kind: "form", visit: { visitId: outcome.visitId, codeName: outcome.codeName } });
+    } else {
+      setPhase({ kind: outcome.kind });
+    }
+  }, [slug]);
 
-  // Claim exactly once per mount; the ref survives React's dev-mode effect replay.
+  // Open exactly once per mount; the ref survives React's dev-mode effect replay.
   useEffect(() => {
-    if (claimStarted.current) return;
-    claimStarted.current = true;
-    void claim();
-  }, [claim]);
+    if (openStarted.current) return;
+    openStarted.current = true;
+    void open();
+  }, [open]);
 
-  function retryClaim() {
+  function retryOpen() {
     setPhase({ kind: "claiming" });
-    void claim();
+    void open();
   }
 
-  async function submit() {
-    setPhase({ kind: "submitting" });
-    const outcome = await submitEntry(toSubmission(draft, token));
+  async function submit(visit: Visit) {
+    setPhase({ kind: "submitting", visit });
+    const outcome = await submitEntry(toSubmission(draft, visit.visitId));
     if (outcome.kind === "done") setPhase({ kind: "done", resultId: outcome.resultId });
-    else if (outcome.kind === "used") setPhase({ kind: "used" });
-    else setPhase({ kind: "form", error: outcome.message });
+    // The server says "expired" for an unknown visit and "already submitted" for a reused one.
+    else if (outcome.kind === "used") setPhase({ kind: /expired/i.test(outcome.message) ? "invalid" : "used" });
+    else setPhase({ kind: "form", visit, error: outcome.message });
   }
 
   return (
     <SubmitShell>
       {phase.kind === "claiming" && <ClaimingScreen />}
       {phase.kind === "form" && (
-        <SubmitForm draft={draft} onChange={setDraft} onSubmit={submit} error={phase.error} />
+        <SubmitForm
+          draft={draft}
+          onChange={setDraft}
+          onSubmit={() => submit(phase.visit)}
+          error={phase.error}
+          codeName={phase.visit.codeName}
+        />
       )}
       {phase.kind === "submitting" && <ProcessingScreen />}
       {phase.kind === "done" && <DoneScreen />}
       {phase.kind === "used" && <UsedScreen />}
       {phase.kind === "invalid" && <InvalidScreen />}
-      {phase.kind === "offline" && <OfflineScreen onRetry={retryClaim} />}
+      {phase.kind === "offline" && <OfflineScreen onRetry={retryOpen} />}
     </SubmitShell>
   );
 }

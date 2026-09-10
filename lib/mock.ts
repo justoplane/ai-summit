@@ -1,20 +1,28 @@
-import type { HostState, MatchResult, MemberTally } from "@/lib/types";
+import type { HostState, IntakeCode, MatchResult, MemberTally } from "@/lib/types";
 
 /**
  * Sample data for building UI without a backend.
  * Import from client or server components alike.
  */
 
+export const MOCK_CODES: IntakeCode[] = [
+  { id: "code-floor", slug: "k7m2p9qa", name: "Floor display", createdAt: new Date(Date.now() - 86_400_000).toISOString(), archivedAt: null },
+  { id: "code-insta", slug: "x3fd8hqe", name: "Instagram story", createdAt: new Date(Date.now() - 3_600_000).toISOString(), archivedAt: null },
+];
+
 export const MOCK_HOST_STATE: HostState = {
-  activeToken: "k7m2p9qa",
-  shlayteMaxxing: false,
+  floorCode: MOCK_CODES[0],
+  follow: "code",
+  codes: MOCK_CODES,
   pending: 1,
   latestResultId: "mock-1",
+  shlayteMaxxing: false,
 };
 
 export const MOCK_RESULT: MatchResult = {
   id: "mock-1",
-  token: "abc12345",
+  codeId: "code-floor",
+  visitId: "visit-1",
   createdAt: new Date(Date.now() - 90_000).toISOString(),
   model: "mock",
   submitter: {
@@ -41,7 +49,8 @@ const MEMBER_IDS = ["resident-1", "resident-2", "resident-3", "resident-4", "res
 export const MOCK_RESULTS: MatchResult[] = NAMES.map((name, i) => ({
   ...MOCK_RESULT,
   id: `mock-${i + 2}`,
-  token: `tok${i}`,
+  codeId: i % 3 === 0 ? "code-insta" : "code-floor",
+  visitId: `visit-${i + 2}`,
   createdAt: new Date(Date.now() - (i + 2) * 7 * 60_000).toISOString(),
   submitter: { ...MOCK_RESULT.submitter, name },
   verdict: {
