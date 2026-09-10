@@ -3,21 +3,22 @@ import { cn } from "@/lib/cn";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 
-type Props = { active: "live" | "history" };
+type Props = { active: "live" | "history" | "residents" };
 
 const links = [
   { key: "live", href: "/", label: "Floor" },
   { key: "history", href: "/history", label: "Ledger" },
+  { key: "residents", href: "/residents", label: "Leadership" },
 ] as const;
 
 export function TopBar({ active }: Props) {
   return (
     <header className="sticky top-0 z-20 border-b border-border bg-background/60 backdrop-blur-xl">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
-        <div className="flex min-w-0 items-center gap-3">
+        <div className="flex min-w-0 items-center gap-3 max-sm:hidden">
           <Link
             href="/"
-            className="truncate font-mono text-xs font-semibold uppercase tracking-[0.22em] text-foreground transition hover:text-cyan"
+            className="hidden truncate font-mono text-xs font-semibold uppercase tracking-[0.22em] text-foreground transition hover:text-cyan sm:block"
           >
             Durf Dungeon LLC
           </Link>
@@ -53,7 +54,7 @@ export function TopBar({ active }: Props) {
         </nav>
 
         <form method="post" action="/api/logout">
-          <Button type="submit" variant="ghost" size="sm">
+          <Button type="submit" variant="ghost" size="sm" className="whitespace-nowrap">
             Sign out
           </Button>
         </form>

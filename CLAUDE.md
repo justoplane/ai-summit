@@ -41,6 +41,7 @@ Definition of done for any change: `pnpm lint && pnpm typecheck && pnpm build` a
 - `/s/[token]` — phone flow, public. On load `POST /api/token/claim` (retires that QR, mints the next).
   Form: name, trait chips, description, photo (resized + compressed in the browser). `POST /api/submit`.
 - `/history` — requires cookie. Server Component listing past results newest-first with a per-member tally.
+- `/residents` — requires cookie. "Leadership" page: one card per resident from `content/members.ts` plus placement counts.
 - Token lifecycle: `active -> claimed -> processing -> done`. See `lib/types.ts`.
 - Storage goes through the `Store` interface in `lib/types.ts`. `lib/store/memory.ts` for dev,
   `lib/store/supabase.ts` for prod, chosen by `getStore()` based on env.
@@ -53,6 +54,7 @@ app/
   page.tsx                  host display (agent C)
   login/                    password page (agent E)
   history/                  past results (agent F)
+  residents/                leadership page: the six officers with bios and placement counts
   s/[token]/                phone flow (agent D)
   api/state, api/token/claim, api/results/latest, api/submit   route handlers (orchestrator)
   api/login                 sets the cookie (agent E)

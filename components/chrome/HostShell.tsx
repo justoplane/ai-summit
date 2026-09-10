@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Footer } from "@/components/chrome/Footer";
 import { TopBar } from "@/components/chrome/TopBar";
 
-type Props = { children: ReactNode; active: "live" | "history" };
+type Props = { children: ReactNode; active: "live" | "history" | "residents" };
 
 /** Wraps the authed pages (host display, history) with the top bar and footer. */
 export function HostShell({ children, active }: Props) {
