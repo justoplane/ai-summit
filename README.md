@@ -34,7 +34,8 @@ types the residents actually have are sent to the model, as background. Drop pho
 | Route | What |
 | --- | --- |
 | `/login` | Password gate for the host screen |
-| `/` | Host display: live QR plus the latest match reveal |
+| `/` | Public landing page with a Sign in button |
+| `/floor` | Host display: live QR plus the latest match reveal |
 | `/s/[token]` | Phone intake flow (public) |
 | `/history` | Results ledger and resident leaderboard |
 

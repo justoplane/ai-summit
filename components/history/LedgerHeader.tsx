@@ -15,7 +15,7 @@ export function LedgerHeader() {
         </p>
       </div>
       <Link
-        href="/"
+        href="/floor"
         className="rounded-full font-mono text-xs uppercase tracking-[0.14em] text-muted transition hover:text-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/70"
       >
         ← Live display

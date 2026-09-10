@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 type Props = { searchParams: Promise<{ error?: string }> };
 
 export default async function LoginPage({ searchParams }: Props) {
-  if (await isAuthed()) redirect("/");
+  if (await isAuthed()) redirect("/floor");
   const { error } = await searchParams;
 
   return (

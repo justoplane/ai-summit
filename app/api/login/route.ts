@@ -11,5 +11,5 @@ export async function POST(request: Request) {
   }
 
   await setAuthCookie();
-  return Response.redirect(new URL("/", request.url), 303);
+  return Response.redirect(new URL("/floor", request.url), 303);
 }

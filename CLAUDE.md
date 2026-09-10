@@ -36,7 +36,8 @@ Definition of done for any change: `pnpm lint && pnpm typecheck && pnpm build` a
 ## How the app works
 
 - `/login` — password-only form. Compares to `APP_PASSWORD`, sets the `dd_session` cookie (see `lib/auth.ts`).
-- `/` — host display (requires cookie). Polls `GET /api/state` every ~2s, renders a QR for `/s/<activeToken>`.
+- `/` — public landing page: hero, company facts, leadership cards, investor relations, footer. "Sign in" top right.
+- `/floor` — host display (requires cookie). Polls `GET /api/state` every ~2s, renders a QR for `/s/<activeToken>`.
   When `latestResultId` changes, fetches `GET /api/results/latest` and plays the reveal.
 - `/s/[token]` — phone flow, public. On load `POST /api/token/claim` (retires that QR, mints the next).
   Form: name, trait chips, description, photo (resized + compressed in the browser). `POST /api/submit`.
@@ -51,7 +52,8 @@ Definition of done for any change: `pnpm lint && pnpm typecheck && pnpm build` a
 
 ```
 app/
-  page.tsx                  host display (agent C)
+  page.tsx                  public landing page
+  floor/                    host display (agent C)
   login/                    password page (agent E)
   history/                  past results (agent F)
   residents/                leadership page: the six officers with bios and placement counts
@@ -65,6 +67,7 @@ components/
   submit/                   form, trait picker, photo input (agent D)
   history/                  result rows, tally strip (agent F)
   chrome/                   top bar, ticker, marquee, footer (agent E)
+  landing/                  public landing page sections
 content/
   members.ts                the six residents (placeholders; the owner fills these in)
   traits.ts                 trait chips for the phone form

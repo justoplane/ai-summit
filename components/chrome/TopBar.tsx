@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 type Props = { active: "live" | "history" | "residents" };
 
 const links = [
-  { key: "live", href: "/", label: "Floor" },
+  { key: "live", href: "/floor", label: "Floor" },
   { key: "history", href: "/history", label: "Ledger" },
   { key: "residents", href: "/residents", label: "Leadership" },
 ] as const;
@@ -22,9 +22,9 @@ export function TopBar({ active }: Props) {
           >
             Durf Dungeon LLC
           </Link>
-          <Badge tone="violet" className="hidden sm:inline-flex">
-            FY26 · Q3
-          </Badge>
+          <span className="hidden sm:inline-flex">
+            <Badge tone="violet">FY26 · Q3</Badge>
+          </span>
         </div>
 
         <nav
