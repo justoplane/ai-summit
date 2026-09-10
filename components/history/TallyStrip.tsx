@@ -19,7 +19,7 @@ export function TallyStrip({ tally }: Props) {
           Resident <GlowText>Leaderboard</GlowText>
         </h2>
         <MicroLabel className="mt-1 block">
-          {total} {total === 1 ? "run" : "runs"} logged · 99.9973% ledger integrity
+          {total} {total === 1 ? "match" : "matches"} on record · figures unaudited
         </MicroLabel>
       </div>
 

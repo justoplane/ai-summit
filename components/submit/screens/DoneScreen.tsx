@@ -6,10 +6,10 @@ export function DoneScreen() {
     <StatusScreen
       glyph="✓"
       tone="cyan"
-      eyebrow="status: 200 ok"
-      title={<GlowText>Analysis complete.</GlowText>}
-      body="Look at the big screen."
-      footnote="Your result is being displayed to the room. You may now network."
+      eyebrow="status: received"
+      title={<GlowText>Application received.</GlowText>}
+      body="Please direct your attention to the primary display."
+      footnote="Your result will be discussed at the next all-hands."
     />
   );
 }

@@ -9,7 +9,7 @@ export function ErrorScreen({ message, onRetry }: Props) {
       role="alert"
       className="flex flex-col gap-3 rounded-2xl border border-magenta/40 bg-surface p-4 animate-rise"
     >
-      <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-magenta">inference failed</p>
+      <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-magenta">returned to applicant</p>
       <p className="text-sm">{message}</p>
       <Button type="button" variant="outline" className="w-full" onClick={onRetry}>
         Try again

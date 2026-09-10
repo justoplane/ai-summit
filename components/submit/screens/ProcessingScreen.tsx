@@ -9,7 +9,7 @@ import { FINAL_LINE, PROCESSING_LINES } from "../processingLines";
 const TICK_MS = 700;
 const VISIBLE_LINES = 6;
 
-/** Over-the-top fake progress log while /api/submit waits on the LLM. */
+/** Fake meeting-minutes progress log while /api/submit waits on the LLM. */
 export function ProcessingScreen() {
   const [step, setStep] = useState(0);
 
@@ -29,13 +29,13 @@ export function ProcessingScreen() {
   return (
     <section className="flex flex-1 flex-col justify-center pb-10 animate-rise">
       <div className="flex items-center gap-3">
-        <Spinner className="size-6" label="Running compatibility inference" />
+        <Spinner className="size-6" label="Under review" />
         <h1 className="font-display text-2xl font-bold tracking-tight">
-          Running <GlowText>inference</GlowText>
+          Under <GlowText>review</GlowText>.
         </h1>
       </div>
       <p className="mt-2 text-sm text-muted">
-        Do not close this tab. Our GPUs are emotionally invested.
+        Do not close this tab. The committee is in session.
       </p>
 
       <ol className="mt-8 flex flex-col gap-2 rounded-2xl border border-border bg-surface p-4 font-mono text-xs">
@@ -56,7 +56,7 @@ export function ProcessingScreen() {
 
       <div className="mt-6">
         <div className="flex items-baseline justify-between font-mono text-[11px] uppercase tracking-[0.16em] text-muted">
-          <span>compatibility pipeline</span>
+          <span>review progress</span>
           <span className="tabular-nums text-foreground">{pct.toFixed(2)}%</span>
         </div>
         <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-surface-strong">

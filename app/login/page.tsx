@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/Card";
 import { GlowText } from "@/components/ui/GlowText";
 import { Input } from "@/components/ui/Input";
 
-export const metadata: Metadata = { title: "Login" };
+export const metadata: Metadata = { title: "Sign in" };
 export const dynamic = "force-dynamic";
 
 // PageProps<"/login"> only exists after the next build regenerates routes.d.ts.
@@ -30,25 +30,25 @@ export default async function LoginPage({ searchParams }: Props) {
             Durf Dungeon LLC
           </span>
           <Badge live tone="cyan">
-            Investor Portal
+            Officer access
           </Badge>
         </div>
 
         <h1 className="mt-8 font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl">
-          Access the <GlowText>compatibility layer.</GlowText>
+          Sign in to the <GlowText>company.</GlowText>
         </h1>
         <p className="mt-4 text-muted">
-          Restricted to accredited investors, board members, and residents.
+          Access is limited to officers of the company and people who live here.
         </p>
 
         <form method="post" action="/api/login" className="mt-8 space-y-4">
           <div className="space-y-2">
             <label
               htmlFor="password"
-              className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.14em] text-muted"
+              className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted"
             >
-              <span>Access credential</span>
-              <span className="text-cyan/80">TLS 1.3 · vibes encrypted</span>
+              <span>Passphrase</span>
+              <span className="ml-auto text-cyan/80">Stored in a text file. We are aware.</span>
             </label>
             <Input
               id="password"
@@ -69,17 +69,17 @@ export default async function LoginPage({ searchParams }: Props) {
               role="alert"
               className="rounded-xl border border-magenta/40 bg-magenta/10 px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-magenta"
             >
-              Credentials rejected by the compliance layer.
+              That passphrase was not recognized. HR has been informed.
             </p>
           )}
 
           <Button type="submit" size="lg" className="w-full">
-            Authenticate
+            Sign in
           </Button>
         </form>
 
         <p className="mt-8 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-muted/70">
-          SOC 2 Type II (pending) · Patent pending · Series A pending
+          Not audited · Not incorporated · Not a real company
         </p>
       </Card>
     </main>

@@ -12,7 +12,7 @@ export function SubmitShell({ children }: Props) {
           Durf Dungeon <span className="text-muted">LLC</span>
         </p>
         <Badge tone="lime" live>
-          Secure intake
+          Applicant intake
         </Badge>
       </header>
       {children}

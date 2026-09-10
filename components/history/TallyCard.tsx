@@ -18,7 +18,7 @@ export function TallyCard({ member, count, rank, pct, leader }: Props) {
     <li className={cn("glass flex flex-col gap-4 rounded-3xl p-5", leader && "glow")}>
       <div className="flex items-start justify-between gap-3">
         <MicroLabel>#{rank}</MicroLabel>
-        {leader && <Badge tone="lime">Most compatible</Badge>}
+        {leader && <Badge tone="lime">Top performer</Badge>}
       </div>
 
       <div className="flex items-center gap-4">

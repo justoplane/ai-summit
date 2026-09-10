@@ -1,17 +1,17 @@
 type Metric = { label: string; value: string };
 
 const metrics: Metric[] = [
-  { label: "Compatibility throughput", value: "99.9971%" },
-  { label: "Vibe latency", value: "14ms" },
-  { label: "Matches served", value: "∞" },
-  { label: "Series A", value: "pending" },
-  { label: "GPU cluster", value: "warm" },
-  { label: "Churn", value: "N/A (love is forever)" },
-  { label: "Uptime", value: "100.0001%" },
-  { label: "Residents online", value: "6/6" },
-  { label: "Heartbreak SLA", value: "0.0000%" },
-  { label: "Edge regions", value: "1 (the basement)" },
-  { label: "Burn rate", value: "emotionally sustainable" },
+  { label: "Headcount", value: "6" },
+  { label: "Facilities", value: "1 (house)" },
+  { label: "Open roles", value: "0" },
+  { label: "Uptime", value: "100%" },
+  { label: "Dishwasher", value: "pending review" },
+  { label: "FY26 guidance", value: "withdrawn" },
+  { label: "Matches to date", value: "see ledger" },
+  { label: "Legal", value: "has declined to comment" },
+  { label: "Dividend", value: "none" },
+  { label: "Next all-hands", value: "Sunday" },
+  { label: "Thermostat", value: "under board review" },
 ];
 
 /** Decorative scrolling metrics strip. Hidden from assistive tech. */

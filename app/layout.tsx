@@ -8,7 +8,7 @@ const display = Space_Grotesk({ variable: "--font-display", subsets: ["latin"], 
 
 export const metadata: Metadata = {
   title: { default: "Durf Dungeon LLC", template: "%s · Durf Dungeon LLC" },
-  description: "Enterprise-grade romantic compatibility inference. Series A pending.",
+  description: "Romantic compatibility services for a house of six. Results are final and unaudited.",
 };
 
 export const viewport: Viewport = {

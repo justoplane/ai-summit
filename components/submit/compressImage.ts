@@ -2,7 +2,7 @@
 
 export class UnsupportedImageError extends Error {
   constructor() {
-    super("We couldn't read that photo. Try a different one (JPEG or PNG work best).");
+    super("That photo could not be read. Try a different one (JPEG or PNG).");
     this.name = "UnsupportedImageError";
   }
 }
@@ -67,7 +67,7 @@ export async function compressImage(file: File): Promise<string> {
   canvas.height = Math.max(1, Math.round(height * scale));
 
   const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("This browser can't process images. Try another one.");
+  if (!ctx) throw new Error("This browser cannot process images. Try another one.");
   // JPEG has no alpha channel; without a fill, transparent PNG pixels turn black.
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, canvas.width, canvas.height);

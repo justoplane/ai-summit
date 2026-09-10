@@ -29,13 +29,13 @@ export function ResultRow({ result }: Props) {
                 className="size-14 shrink-0 rounded-2xl object-cover"
               />
               <span className="min-w-0 md:max-w-40">
-                <MicroLabel className="block">Guest</MicroLabel>
+                <MicroLabel className="block">Applicant</MicroLabel>
                 <span className="block truncate font-semibold">{submitter.name}</span>
               </span>
             </span>
 
             <span aria-hidden className="px-1 text-2xl leading-none text-magenta">♥</span>
-            <span className="sr-only">matched with</span>
+            <span className="sr-only">placed with</span>
 
             <span className="flex min-w-0 max-w-full items-center gap-3">
               <Image

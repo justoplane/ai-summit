@@ -5,9 +5,9 @@ export function InvalidScreen() {
     <StatusScreen
       glyph="✕"
       tone="magenta"
-      eyebrow="status: 404 not found"
-      title="Link expired."
-      body="Scan the QR code on the big screen again to get a fresh one."
+      eyebrow="status: expired"
+      title="This link has expired."
+      body="Scan the code on the display for a new one."
     />
   );
 }

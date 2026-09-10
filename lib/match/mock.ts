@@ -1,20 +1,20 @@
 import type { MatchVerdict, Member, Submission } from "@/lib/types";
 
 const HEADLINES = [
-  "Statistically inevitable.",
-  "Our models have never been this confident.",
-  "A pairing so aligned it broke our GPU cluster.",
-  "Synergy detected at the edge.",
-  "The algorithm has spoken. Loudly.",
-  "Compatibility score exceeded expected parameters.",
+  "Applicant and resident reach agreement on thermostat.",
+  "Committee approves placement; dissent not recorded.",
+  "Placement finalized after brief review of dishwasher loading.",
+  "Parties align on bedtime, remain divided on the couch.",
+  "Match confirmed. Both sides describe terms as acceptable.",
+  "Applicant cleared for the good chair, effective immediately.",
 ];
 
 const RED_FLAGS = [
-  "Both of you think you're the funny one.",
-  "Neither of you will ever pick the restaurant.",
-  "Disagreement over correct thermostat temperature is inevitable.",
-  "One of you owns too many chargers. We won't say who.",
-  "Shared enthusiasm for staying up too late.",
+  "Both parties believe they are the funny one. The committee expects this to surface at the first dinner and again at every dinner after it.",
+  "Neither party will pick the restaurant, and the committee expects this to reach mediation.",
+  "The parties have not yet discussed the thermostat. The committee has set aside time in the second quarter.",
+  "One party owns a material number of chargers. The committee declines to say which, but has seen the drawer.",
+  "Both parties report staying up too late. The committee expects this to be framed as a shared interest until it is framed as a grievance.",
 ];
 
 function hash(input: string): number {
@@ -33,12 +33,12 @@ export async function mockMatch(submission: Submission, members: Member[]): Prom
   const winner = members[h % members.length];
   const runnerUp = members[(h + 1) % members.length];
   const score = 61 + (h % 38);
-  const traits = submission.traits.length ? submission.traits.slice(0, 2).join(" and ").toLowerCase() : "an air of mystery";
+  const traits = submission.traits.length ? submission.traits.slice(0, 2).join(" and ").toLowerCase() : "no stated traits";
   return {
     memberId: winner.id,
     score,
     headline: HEADLINES[h % HEADLINES.length],
-    rationale: `${submission.name} brings ${traits} to the table, and ${winner.name} (${winner.companyTitle}) has been waiting for exactly that. Our proprietary vibe-alignment tensor lit up across every dimension we track. ${runnerUp.name} put up a strong fight but ultimately lacked the necessary synergy.`,
+    rationale: `The committee reviewed ${submission.name}'s file, which lists ${traits}, and placed them with ${winner.name} (${winner.companyTitle}). The deciding factor was a projected Tuesday evening in which both parties reheat separate leftovers, eat them on the same couch, and say very little. The committee considers this a strong outcome. ${runnerUp.name} was also considered and remains in good standing.`,
     runnerUpId: runnerUp.id,
     redFlag: RED_FLAGS[(h >> 3) % RED_FLAGS.length],
   };

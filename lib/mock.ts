@@ -20,17 +20,17 @@ export const MOCK_RESULT: MatchResult = {
     name: "Jordan",
     traits: ["Night owl", "Foodie", "Overthinker", "Dog person"],
     description:
-      "I'm a software engineer who spends weekends trying new ramen spots and rewatching the same three shows.",
+      "Software engineer. Weekends are spent trying new ramen spots and rewatching the same three shows. Open to feedback on the shows.",
     photoUrl: "/placeholder-user.svg",
   },
   verdict: {
     memberId: "resident-3",
     score: 94,
-    headline: "A pairing so aligned it broke our GPU cluster.",
+    headline: "Placement finalized after brief review of dishwasher loading.",
     rationale:
-      "Jordan brings night owl energy and a documented ramen obsession, and Resident Three has been waiting for exactly that. Our proprietary vibe-alignment tensor lit up across every dimension we track. Resident One put up a strong fight but ultimately lacked the necessary synergy.",
+      "The committee reviewed Jordan's file, which lists night owl and foodie, and placed them with Resident Three. The deciding factor was a projected Tuesday evening in which both parties reheat separate leftovers, eat them on the same couch, and say very little. The committee considers this a strong outcome. Resident One was also considered and remains in good standing.",
     runnerUpId: "resident-1",
-    redFlag: "Both of you think you're the funny one.",
+    redFlag: "Both parties believe they are the funny one. The committee expects this to surface at the first dinner and again at every dinner after it.",
   },
 };
 

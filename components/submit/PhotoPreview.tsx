@@ -11,12 +11,12 @@ export function PhotoPreview({ src, onRetake }: Props) {
         {/* eslint-disable-next-line @next/next/no-img-element -- data URL preview; nothing to optimize */}
         <img src={src} alt="Your selected photo" className="size-full object-cover" />
         <span className="absolute left-3 top-3 rounded-full bg-background/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-lime backdrop-blur">
-          biometric lock ok
+          photo on file
         </span>
       </div>
       <div className="flex items-center justify-between gap-3">
         <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
-          payload optimized · {kb} KB
+          on file · {kb} KB
         </p>
         <Button type="button" variant="outline" size="sm" onClick={onRetake}>
           Retake

@@ -4,7 +4,7 @@ import { cn } from "@/lib/cn";
 type Props = {
   glyph: string;
   tone?: "cyan" | "violet" | "magenta" | "amber";
-  /** Mono status line above the headline, e.g. "status: 409 conflict". */
+  /** Mono status line above the headline, e.g. "status: received". */
   eyebrow: string;
   title: ReactNode;
   body: string;

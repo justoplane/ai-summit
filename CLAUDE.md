@@ -123,10 +123,31 @@ The whole point of this file is letting several agents work at once without step
 
 ## Voice and theme
 
-Over-the-top Silicon Valley launch-page energy. Everything is "enterprise-grade", "at the edge",
-"Series A pending", "patent pending". Fake metrics with too many decimal places. Dark glass panels,
-violet/cyan/magenta glow, monospace uppercase labels, gratuitous gradients. Confetti on reveal.
-Funny, never mean: the joke is the startup, not the guests.
+**Meta C-suite.** Durf Dungeon LLC is a house that has decided it is a company, and every surface is
+written by an executive who takes that completely seriously. Earnings-call cadence, board-deck nouns,
+quiet corporate dread. The humor comes from applying real corporate language to a house party with
+total sincerity, and from the occasional crack in the facade: a footnote that admits the truth, a
+metric that measures something domestic. Never from wacky exaggeration.
+
+Do:
+- Sound like a real 10-K, earnings call, all-hands, or CEO LinkedIn post. Understated. Specific. Dry.
+- Corporate euphemism for domestic facts: "Headcount: 6", "Facilities: one (1) house", "Q3 initiative: the dishwasher".
+- Meta, with a straight face: acknowledge this is a party app for a house ("This ledger is not audited. Nothing here is.").
+- Disclaimers, footnotes, and forward-looking-statement language as the punchline.
+- Plausible numbers. "Uptime 100% (the house has not gone down)" beats "99.9971%".
+- Sentence case. Mono uppercase only for micro-labels.
+
+Don't:
+- Startup-hype texture: "at the edge", "enterprise-grade", "vibe tensors", "patent pending", "Series A pending" stacked on everything, "10x", "GPU cluster".
+- Internet or AI-joke filler: "unhinged", "chaos", "vibes", "energy", "emotionally invested GPUs", "Your Mom's 401k", "zero accountability".
+- Exclamation points, emojis, puns as the main joke, jokes that explain themselves, tidy triplets.
+- Fake investor logos or celebrity-brand parodies. If backers are mentioned, they are boring: "Backed by a savings account."
+
+Register check. Bad: "Running vibe inference at the edge. Our GPUs are emotionally invested!"
+Good: "Your submission has been received and will be discussed at the next all-hands."
+
+Visuals stay: dark glass panels, violet/cyan/magenta accents, mono micro-labels, confetti on reveal.
+The LLM's own voice is defined separately in `lib/match/prompt.ts` (deadpan, over-invested matchmaker).
 
 ## Vercel
 

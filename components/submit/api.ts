@@ -40,7 +40,7 @@ export async function submitEntry(submission: Submission): Promise<SubmitOutcome
       body: JSON.stringify(submission),
     });
   } catch {
-    return { kind: "error", message: "Couldn't reach the server. Check your connection and try again." };
+    return { kind: "error", message: "We could not reach the office. Check your connection and try again." };
   }
 
   const body = (await res.json().catch(() => null)) as { resultId?: string; error?: string } | null;
@@ -48,6 +48,6 @@ export async function submitEntry(submission: Submission): Promise<SubmitOutcome
   if (res.status === 409) return { kind: "used" };
   return {
     kind: "error",
-    message: body?.error ?? `Something went wrong (HTTP ${res.status}). Try again.`,
+    message: body?.error ?? `The committee could not reach a decision (HTTP ${res.status}). Try again.`,
   };
 }

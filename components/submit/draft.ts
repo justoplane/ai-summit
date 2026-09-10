@@ -20,10 +20,10 @@ export const DESCRIPTION_MAX = 600;
 /** Validation hints keyed by field. An empty object means the draft can be submitted. */
 export function draftIssues(draft: Draft): Partial<Record<DraftField, string>> {
   const issues: Partial<Record<DraftField, string>> = {};
-  if (!draft.name.trim()) issues.name = "We need a name for the badge.";
-  if (draft.traits.length < MIN_TRAITS) issues.traits = `Pick at least ${MIN_TRAITS} traits.`;
-  if (!draft.description.trim()) issues.description = "A sentence or two. The model is waiting.";
-  if (!draft.photoDataUrl) issues.photoDataUrl = "A photo is required for the biometric layer.";
+  if (!draft.name.trim()) issues.name = "A name is required for the record.";
+  if (draft.traits.length < MIN_TRAITS) issues.traits = `Select at least ${MIN_TRAITS} traits.`;
+  if (!draft.description.trim()) issues.description = "A sentence or two is required.";
+  if (!draft.photoDataUrl) issues.photoDataUrl = "A photo is required for the file.";
   return issues;
 }
 

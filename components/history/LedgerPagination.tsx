@@ -18,15 +18,15 @@ export function LedgerPagination({ nextCursor, before }: Props) {
   if (!nextCursor && !before) return null;
 
   return (
-    <nav aria-label="Ledger pages" className="flex flex-wrap items-center justify-center gap-3">
+    <nav aria-label="Ledger periods" className="flex flex-wrap items-center justify-center gap-3">
       {before && (
         <Link href="/history" className={linkButton}>
-          Newest
+          Current period
         </Link>
       )}
       {nextCursor && (
         <Link href={`/history?before=${encodeURIComponent(nextCursor)}`} className={linkButton}>
-          Load older runs
+          Prior periods
         </Link>
       )}
     </nav>

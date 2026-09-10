@@ -48,7 +48,7 @@ export function TraitPicker({ value, onChange, labelledBy }: Props) {
         <span aria-live="polite" className={cn("tabular-nums", atMax && "text-cyan")}>
           {value.length} / {MAX_TRAITS} selected
         </span>
-        <span>{atMax ? "capacity reached" : `min ${MIN_TRAITS}`}</span>
+        <span>{atMax ? "limit reached" : `minimum ${MIN_TRAITS}`}</span>
       </div>
     </div>
   );

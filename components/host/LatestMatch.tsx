@@ -31,7 +31,7 @@ export function LatestMatch({ result, isNewArrival }: Props) {
           {MATCH_COPY.badge}
         </Badge>
         <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-          Run {result.id.slice(0, 8)}
+          Ref {result.id.slice(0, 8)}
         </span>
       </div>
 
@@ -65,10 +65,10 @@ export function LatestMatch({ result, isNewArrival }: Props) {
         />
       </div>
 
-      <h2 className="mt-8 font-display text-3xl font-bold leading-tight tracking-tight md:text-4xl 2xl:text-5xl">
+      <h2 className="mt-8 font-display text-3xl font-bold leading-tight tracking-tight md:text-4xl">
         {result.verdict.headline}
       </h2>
-      <p className="mt-3 max-w-[65ch] text-lg leading-relaxed text-foreground/85 2xl:text-xl">
+      <p className="mt-3 max-w-[70ch] text-lg leading-relaxed text-foreground/85">
         {result.verdict.rationale}
       </p>
 

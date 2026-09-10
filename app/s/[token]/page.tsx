@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { SubmitFlow } from "@/components/submit/SubmitFlow";
 
 export const metadata: Metadata = {
-  title: "Get matched",
-  description: "Secure intake. Enterprise-grade compatibility inference in under a minute.",
+  title: "Apply to be matched",
+  description: "Form DD-1. Applicant intake for Durf Dungeon LLC. Four fields, reviewed by the committee. Decisions are final.",
   robots: { index: false, follow: false },
 };
 

@@ -43,7 +43,7 @@ export function MatchBadges({ result, runnerUpName, achievement }: Props) {
       </div>
 
       {result.submitter.traits.length > 0 && (
-        <ul className="flex flex-wrap gap-2" aria-label="Subject traits">
+        <ul className="flex flex-wrap gap-2" aria-label="Applicant traits">
           {result.submitter.traits.map((trait) => (
             <li key={trait}>
               <Badge>

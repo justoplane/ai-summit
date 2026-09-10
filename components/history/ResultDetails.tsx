@@ -15,23 +15,23 @@ export function ResultDetails({ result }: Props) {
     <div className="grid gap-6 border-t border-border px-5 py-5 md:grid-cols-2">
       <div className="flex flex-col gap-5">
         <div>
-          <MicroLabel className="block">Rationale</MicroLabel>
+          <MicroLabel className="block">Committee notes</MicroLabel>
           <p className="mt-2 text-sm leading-relaxed">{verdict.rationale}</p>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:gap-3">
           <Badge tone="magenta" className="shrink-0">
-            Red flag
+            Risk factor
           </Badge>
           <p className="text-sm leading-relaxed">{verdict.redFlag}</p>
         </div>
         <div>
-          <MicroLabel className="block">Resident achievement</MicroLabel>
+          <MicroLabel className="block">Track record</MicroLabel>
           <p className="mt-1 text-sm">
             <span className="text-amber">&#9733;</span> {member.achievement}
           </p>
         </div>
         <div>
-          <MicroLabel className="block">Runner-up</MicroLabel>
+          <MicroLabel className="block">Also considered</MicroLabel>
           <p className="mt-1 text-sm">
             {runnerUp.name} <span className="text-muted">· {runnerUp.companyTitle}</span>
           </p>
@@ -40,7 +40,7 @@ export function ResultDetails({ result }: Props) {
 
       <div className="flex flex-col gap-5">
         <div>
-          <MicroLabel className="block">Declared traits</MicroLabel>
+          <MicroLabel className="block">Self-reported traits</MicroLabel>
           {submitter.traits.length > 0 ? (
             <ul className="mt-2 flex flex-wrap gap-1.5">
               {submitter.traits.map((trait) => (
@@ -50,12 +50,12 @@ export function ResultDetails({ result }: Props) {
               ))}
             </ul>
           ) : (
-            <p className="mt-2 text-sm text-muted">None declared.</p>
+            <p className="mt-2 text-sm text-muted">None reported. The committee has noted this.</p>
           )}
         </div>
         <div>
-          <MicroLabel className="block">In their words</MicroLabel>
-          <p className="mt-2 text-sm leading-relaxed text-muted">{submitter.description || "—"}</p>
+          <MicroLabel className="block">Statement</MicroLabel>
+          <p className="mt-2 text-sm leading-relaxed text-muted">{submitter.description || "No statement was provided."}</p>
         </div>
       </div>
     </div>

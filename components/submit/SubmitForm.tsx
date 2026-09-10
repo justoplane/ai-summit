@@ -37,11 +37,11 @@ export function SubmitForm({ draft, onChange, onSubmit, error }: Props) {
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-1 flex-col">
       <div className="animate-rise">
-        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Intake form · v2.4.1</p>
+        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Form DD-1 · Rev. 3</p>
         <h1 className="mt-2 font-display text-3xl font-bold tracking-tight">
-          Let&apos;s find your <GlowText>resident</GlowText>.
+          Apply to be <GlowText>matched</GlowText>.
         </h1>
-        <p className="mt-2 text-sm text-muted">Four fields. One inference. Zero accountability.</p>
+        <p className="mt-2 text-sm text-muted">Four fields. Reviewed by the committee. Decisions are final.</p>
       </div>
 
       {error && (
@@ -59,7 +59,7 @@ export function SubmitForm({ draft, onChange, onSubmit, error }: Props) {
             maxLength={NAME_MAX}
             autoComplete="given-name"
             enterKeyHint="next"
-            placeholder="What should we call you?"
+            placeholder="As it should appear in the minutes."
             value={draft.name}
             onChange={(e) => patch({ name: e.target.value })}
             onBlur={() => touch("name")}
@@ -89,7 +89,7 @@ export function SubmitForm({ draft, onChange, onSubmit, error }: Props) {
             name="description"
             required
             maxLength={DESCRIPTION_MAX}
-            placeholder="Two or three sentences. What you're into, what you're like at a party, your hottest take."
+            placeholder="Two or three sentences. Interests, habits, a position you'd defend in a meeting."
             value={draft.description}
             onChange={(e) => patch({ description: e.target.value })}
             onBlur={() => touch("description")}
@@ -109,10 +109,10 @@ export function SubmitForm({ draft, onChange, onSubmit, error }: Props) {
 
       <div className="sticky bottom-0 z-10 -mx-4 mt-8 bg-gradient-to-t from-background via-background/95 to-transparent px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-10">
         <Button type="submit" size="lg" className="w-full" disabled={!valid}>
-          Run compatibility inference
+          Submit for review
         </Button>
         <p className="mt-2.5 text-center font-mono text-[10px] uppercase tracking-[0.16em] text-muted/70">
-          {valid ? "all systems nominal" : `${pending} of 4 fields pending`}
+          {valid ? "Ready for review" : `${pending} of 4 fields outstanding`}
         </p>
       </div>
     </form>

@@ -35,7 +35,7 @@ export function PhotoInput({ value, onChange, onTouch, labelledBy }: Props) {
       const message =
         err instanceof UnsupportedImageError
           ? err.message
-          : "Couldn't process that photo. Try another one.";
+          : "That photo could not be processed. Try another one.";
       setStatus({ kind: "error", message });
     }
   }
@@ -66,8 +66,8 @@ export function PhotoInput({ value, onChange, onTouch, labelledBy }: Props) {
       </div>
       {working && (
         <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
-          <Spinner className="size-3.5" label="Optimizing photo" />
-          optimizing payload…
+          <Spinner className="size-3.5" label="Attaching photo" />
+          attaching…
         </p>
       )}
       {status.kind === "error" && <p className="text-sm text-amber">{status.message}</p>}

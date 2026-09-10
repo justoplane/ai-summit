@@ -8,8 +8,8 @@ export function OfflineScreen({ onRetry }: Props) {
     <StatusScreen
       glyph="⚡"
       tone="amber"
-      eyebrow="status: connection lost"
-      title="Couldn't reach the mothership."
+      eyebrow="status: unreachable"
+      title="We could not reach the office."
       body="Check your connection and try again."
       action={
         <Button type="button" size="lg" className="w-full" onClick={onRetry}>

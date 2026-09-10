@@ -68,9 +68,9 @@ export function QrPanel({ state }: Props) {
       <p className="flex min-h-8 items-center justify-center gap-3 text-xl">
         {state.pending > 0 ? (
           <>
-            <Spinner label="Inference in progress" />
+            <Spinner label="Review in progress" />
             <span className="text-cyan">
-              {state.pending} inference{state.pending === 1 ? "" : "s"} in flight
+              {state.pending} submission{state.pending === 1 ? "" : "s"} under review
             </span>
           </>
         ) : (

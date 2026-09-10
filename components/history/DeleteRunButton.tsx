@@ -14,7 +14,7 @@ export function DeleteRunButton({ id, name }: Props) {
   async function onClick(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    if (!window.confirm(`Delete ${name}'s run from the ledger? This can't be undone.`)) return;
+    if (!window.confirm(`Remove this entry from the ledger? This cannot be undone.`)) return;
     setBusy(true);
     try {
       const res = await fetch(`/api/results/${id}`, { method: "DELETE" });
@@ -22,7 +22,7 @@ export function DeleteRunButton({ id, name }: Props) {
       router.refresh();
     } catch (err) {
       console.error("[delete-run]", err);
-      window.alert("Delete failed. Try again.");
+      window.alert("The entry could not be removed. The ledger stands.");
       setBusy(false);
     }
   }
@@ -32,8 +32,8 @@ export function DeleteRunButton({ id, name }: Props) {
       type="button"
       onClick={onClick}
       disabled={busy}
-      aria-label={`Delete ${name}'s run`}
-      title="Delete run"
+      aria-label={`Remove ${name}'s entry from the ledger`}
+      title="Remove entry"
       className={cn(
         "inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-border text-muted transition",
         "hover:border-magenta/60 hover:text-magenta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta/60",
