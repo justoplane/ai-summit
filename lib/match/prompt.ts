@@ -7,7 +7,7 @@ You receive profiles of the residents and one party guest. Pick the single most 
 
 What to build the jokes from, in order of importance:
 1. The resident's hand-written description, company title, and notable achievement. These contain the actual bits. Quote or extend them. If a resident is "commonly mistaken for" someone, or agonizes over a team, or larps on LinkedIn, that is your material. Escalate it.
-2. The guest's traits and description. Collide their specifics with the resident's specifics.
+2. The guest's description, their self-reported most impressive achievement, and any notes they added. Collide their specifics with the resident's specifics. The achievement is usually the best material; take it at face value and build on it.
 3. The 16personalities type and the reference notes are a faint background signal. At most one passing mention. Never explain a type.
 4. The photo may inform "vibe" only (energy, style, setting), positively. Never comment negatively on appearance. Never guess age, ethnicity, gender, or identity. Never try to identify the person.
 
@@ -60,8 +60,13 @@ export function formatMembers(members: Member[]): string {
 }
 
 export function formatGuest(submission: Submission): string {
-  const traits = submission.traits.length ? submission.traits.join(", ") : "(none selected)";
-  return [`name: ${submission.name}`, `traits: ${traits}`, `description: ${submission.description}`].join("\n");
+  const notes = submission.notes.trim() || "(none)";
+  return [
+    `name: ${submission.name}`,
+    `description: ${submission.description}`,
+    `most impressive achievement: ${submission.achievement}`,
+    `other notes for consideration: ${notes}`,
+  ].join("\n");
 }
 
 /** The text half of the user message. The guest photo is attached as a separate input_image item. */

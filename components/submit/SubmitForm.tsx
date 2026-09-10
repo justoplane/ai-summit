@@ -5,10 +5,9 @@ import { Button } from "@/components/ui/Button";
 import { GlowText } from "@/components/ui/GlowText";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
-import { DESCRIPTION_MAX, NAME_MAX, draftIssues, type Draft, type DraftField } from "./draft";
+import { ACHIEVEMENT_MAX, DESCRIPTION_MAX, NAME_MAX, NOTES_MAX, REQUIRED_FIELDS, draftIssues, type Draft, type DraftField } from "./draft";
 import { Field } from "./Field";
 import { PhotoInput } from "./PhotoInput";
-import { TraitPicker } from "./TraitPicker";
 import { ErrorScreen } from "./screens/ErrorScreen";
 
 type Props = {
@@ -45,7 +44,7 @@ export function SubmitForm({ draft, onChange, onSubmit, error, codeName }: Props
         <h1 className="mt-2 font-display text-3xl font-bold tracking-tight">
           Apply to be <GlowText>matched</GlowText>.
         </h1>
-        <p className="mt-2 text-sm text-muted">Four fields. Reviewed by the committee. Decisions are final.</p>
+        <p className="mt-2 text-sm text-muted">Five questions. Reviewed by the committee. Decisions are final.</p>
       </div>
 
       {error && (
@@ -71,17 +70,6 @@ export function SubmitForm({ draft, onChange, onSubmit, error, codeName }: Props
           />
         </Field>
 
-        <Field label="Traits" labelId="traits-label" hint={hint("traits")}>
-          <TraitPicker
-            value={draft.traits}
-            labelledBy="traits-label"
-            onChange={(traits) => {
-              touch("traits");
-              patch({ traits });
-            }}
-          />
-        </Field>
-
         <Field
           label="Description"
           htmlFor="description"
@@ -101,12 +89,48 @@ export function SubmitForm({ draft, onChange, onSubmit, error, codeName }: Props
           />
         </Field>
 
+        <Field
+          label="Most impressive achievement"
+          htmlFor="achievement"
+          meta={`${draft.achievement.length} / ${ACHIEVEMENT_MAX}`}
+          hint={hint("achievement")}
+        >
+          <Input
+            id="achievement"
+            name="achievement"
+            required
+            maxLength={ACHIEVEMENT_MAX}
+            enterKeyHint="next"
+            placeholder="One line. The committee will not verify it."
+            value={draft.achievement}
+            onChange={(e) => patch({ achievement: e.target.value })}
+            onBlur={() => touch("achievement")}
+            aria-invalid={Boolean(hint("achievement"))}
+          />
+        </Field>
+
         <Field label="Photo" labelId="photo-label" hint={hint("photoDataUrl")}>
           <PhotoInput
             value={draft.photoDataUrl}
             labelledBy="photo-label"
             onTouch={() => touch("photoDataUrl")}
             onChange={(photoDataUrl) => patch({ photoDataUrl })}
+          />
+        </Field>
+
+        <Field
+          label="Other relevant notes for consideration"
+          htmlFor="notes"
+          meta={`${draft.notes.length} / ${NOTES_MAX} · optional`}
+        >
+          <Textarea
+            id="notes"
+            name="notes"
+            maxLength={NOTES_MAX}
+            placeholder="Anything the committee should weigh. Allergies, allegiances, ongoing disputes."
+            value={draft.notes}
+            onChange={(e) => patch({ notes: e.target.value })}
+            className="min-h-20"
           />
         </Field>
       </div>
@@ -116,7 +140,7 @@ export function SubmitForm({ draft, onChange, onSubmit, error, codeName }: Props
           Submit for review
         </Button>
         <p className="mt-2.5 text-center font-mono text-[10px] uppercase tracking-[0.16em] text-muted/70">
-          {valid ? "Ready for review" : `${pending} of 4 fields outstanding`}
+          {valid ? "Ready for review" : `${pending} of ${REQUIRED_FIELDS} fields outstanding`}
         </p>
       </div>
     </form>

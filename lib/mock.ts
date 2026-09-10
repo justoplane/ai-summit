@@ -27,7 +27,8 @@ export const MOCK_RESULT: MatchResult = {
   model: "mock",
   submitter: {
     name: "Jordan",
-    traits: ["Night owl", "Foodie", "Overthinker", "Dog person"],
+    achievement: "Assembled a full IKEA wardrobe alone, with two screws left over.",
+    notes: "Available most weeknights. Allergic to cilantro.",
     description:
       "Software engineer. Weekends are spent trying new ramen spots and rewatching the same three shows. Open to feedback on the shows.",
     photoUrl: "/placeholder-user.svg",
@@ -37,7 +38,7 @@ export const MOCK_RESULT: MatchResult = {
     score: 94,
     headline: "Placement finalized after brief review of dishwasher loading.",
     rationale:
-      "The committee reviewed Jordan's file, which lists night owl and foodie, and placed them with Resident Three. The deciding factor was a projected Tuesday evening in which both parties reheat separate leftovers, eat them on the same couch, and say very little. The committee considers this a strong outcome. Resident One was also considered and remains in good standing.",
+      "The committee reviewed Jordan's file, which cites the wardrobe, and placed them with Resident Three. The deciding factor was a projected Tuesday evening in which both parties reheat separate leftovers, eat them on the same couch, and say very little. The committee considers this a strong outcome. Resident One was also considered and remains in good standing.",
     runnerUpId: "resident-1",
     redFlag: "Both parties believe they are the funny one. The committee expects this to surface at the first dinner and again at every dinner after it.",
   },

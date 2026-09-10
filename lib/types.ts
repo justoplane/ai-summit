@@ -67,8 +67,11 @@ export type Visit = {
 export type Submission = {
   visitId: string;
   name: string;
-  traits: string[];
   description: string;
+  /** The applicant's most impressive achievement, in their words. */
+  achievement: string;
+  /** Anything else for the committee. May be empty. */
+  notes: string;
   /** data:image/jpeg;base64,... — resized and compressed in the browser first. */
   photoDataUrl: string;
 };
@@ -99,8 +102,11 @@ export type MatchResult = {
   visitId: string | null;
   submitter: {
     name: string;
-    traits: string[];
     description: string;
+    achievement: string;
+    notes: string;
+    /** Legacy: rows from before the questionnaire changed carry trait chips instead. */
+    traits?: string[];
     /** URL the browser can load: a data URL in dev, a Supabase Storage URL in prod. */
     photoUrl: string;
   };

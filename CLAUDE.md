@@ -44,7 +44,7 @@ Definition of done for any change: `pnpm lint && pnpm typecheck && pnpm build` a
   the selected code only, or every code (setting `floor_follow`). When `latestResultId` changes it fetches
   `GET /api/results/latest?code=<id>`.
 - `/s/[slug]` — phone flow, public. On load `POST /api/visit` logs a `Visit` (the unique-entry record) and returns
-  `visitId`. Form: name, trait chips, description, photo (compressed in the browser). `POST /api/submit` with the
+  `visitId`. Form: name, description, most impressive achievement, photo (compressed in the browser), optional notes. `POST /api/submit` with the
   `visitId`; the result stores `codeId` and `visitId`.
 - `/history` — requires cookie. Ledger, newest first, with a source badge per row, a code filter, and a per-member tally.
 - `/settings` — requires cookie. Create codes, rename, copy link, download QR, pick the floor code and follow mode,
@@ -72,14 +72,13 @@ app/
 components/
   ui/                       primitives: Button, Card, Badge, GlowText, Input, Textarea, Spinner
   host/                     QR panel, reveal card, polling hook (agent C)
-  submit/                   form, trait picker, photo input (agent D)
+  submit/                   form, photo input (agent D)
   history/                  result rows, tally strip (agent F)
   chrome/                   top bar, ticker, marquee, footer (agent E)
   settings/                 code table, create form, QR download, floor selector
   landing/                  public landing page sections
 content/
   members.ts                the six residents (placeholders; the owner fills these in)
-  traits.ts                 trait chips for the phone form
 lib/
   types.ts                  THE shared contract. Add, don't rename.
   env.ts, auth.ts, tokens.ts, cn.ts, format.ts, mock.ts

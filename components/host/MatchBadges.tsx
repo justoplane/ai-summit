@@ -54,17 +54,17 @@ export function MatchBadges({ result, codes, runnerUpName, achievement }: Props)
         </Badge>
       </div>
 
-      {result.submitter.traits.length > 0 && (
-        <ul className="flex flex-wrap gap-2" aria-label="Applicant traits">
-          {result.submitter.traits.map((trait) => (
-            <li key={trait}>
-              <Badge>
-                <span className={readable}>{trait}</span>
-              </Badge>
-            </li>
-          ))}
-        </ul>
-      )}
+      <div className="flex flex-wrap items-center gap-2">
+        <Badge tone="cyan">
+          <span className={readable}>Applicant claims</span>
+          <span className="font-sans text-sm normal-case tracking-normal md:text-base">{result.submitter.achievement}</span>
+        </Badge>
+        {result.submitter.traits?.map((trait) => (
+          <Badge key={trait}>
+            <span className={readable}>{trait}</span>
+          </Badge>
+        ))}
+      </div>
     </div>
   );
 }

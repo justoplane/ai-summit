@@ -3,7 +3,7 @@
 Enterprise-grade romantic compatibility inference. Series A pending.
 
 A party app: guests scan a QR on the big screen, fill in a short intake form on their phone
-(name, trait chips, a description, a selfie), and an LLM decides which of the six Durf Dungeon
+(name, description, most impressive achievement, a selfie, optional notes), and an LLM decides which of the six Durf Dungeon
 residents they're most compatible with. The verdict is revealed on the big screen. Every run is
 logged to the results ledger.
 
@@ -27,7 +27,7 @@ Everything about the six residents lives in `content/members.ts`: name, company 
 achievement, a paragraph description, and their 16personalities type code (like `INFP-T`). The
 reference notes for each type live in `doc/personality_quiz_context.md`; only the sections for
 types the residents actually have are sent to the model, as background. Drop photos in `public/members/` and update the
-`photo` paths. Trait chips for the phone form are in `content/traits.ts`.
+`photo` paths.
 
 ## Pages
 

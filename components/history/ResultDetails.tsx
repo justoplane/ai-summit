@@ -45,8 +45,13 @@ export function ResultDetails({ result, code }: Props) {
 
       <div className="flex flex-col gap-5">
         <div>
-          <MicroLabel className="block">Self-reported traits</MicroLabel>
-          {submitter.traits.length > 0 ? (
+          <MicroLabel className="block">Most impressive achievement</MicroLabel>
+          <p className="mt-2 text-sm leading-relaxed">{submitter.achievement || "None stated."}</p>
+        </div>
+        <div>
+          <MicroLabel className="block">Other notes</MicroLabel>
+          <p className="mt-2 text-sm leading-relaxed text-muted">{submitter.notes || "None provided."}</p>
+          {submitter.traits && submitter.traits.length > 0 && (
             <ul className="mt-2 flex flex-wrap gap-1.5">
               {submitter.traits.map((trait) => (
                 <li key={trait}>
@@ -54,8 +59,6 @@ export function ResultDetails({ result, code }: Props) {
                 </li>
               ))}
             </ul>
-          ) : (
-            <p className="mt-2 text-sm text-muted">None reported. The committee has noted this.</p>
           )}
         </div>
         <div>

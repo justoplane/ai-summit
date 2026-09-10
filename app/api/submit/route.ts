@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { MEMBERS, SHLAYTE_MEMBER_ID } from "@/content/members";
-import { MAX_TRAITS } from "@/content/traits";
 import { matchSubmission } from "@/lib/match";
 import { getStore } from "@/lib/store";
 import { newId } from "@/lib/tokens";
@@ -13,8 +12,9 @@ export const maxDuration = 60;
 const SubmissionSchema = z.object({
   visitId: z.string().min(1),
   name: z.string().trim().min(1).max(40),
-  traits: z.array(z.string().max(40)).max(MAX_TRAITS),
   description: z.string().trim().min(1).max(600),
+  achievement: z.string().trim().min(1).max(200),
+  notes: z.string().trim().max(600).default(""),
   // ~1.1MB of base64 is roughly an 800KB JPEG. Client should compress well below this.
   photoDataUrl: z.string().startsWith("data:image/").max(1_500_000),
 });
@@ -52,8 +52,9 @@ export async function POST(request: Request) {
       visitId: visit.id,
       submitter: {
         name: submission.name,
-        traits: submission.traits,
         description: submission.description,
+        achievement: submission.achievement,
+        notes: submission.notes,
         photoUrl,
       },
       verdict,
