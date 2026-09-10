@@ -19,8 +19,10 @@ export function Hero() {
           Welcome to the <GlowText>Dungeon.</GlowText>
         </h1>
         <p className="max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
-          Durf Dungeon LLC provides romantic compatibility services to guests of the house. Applications are
-          reviewed by committee and announced on the primary display. Decisions are final.
+          Durf Dungeon LLC is dedicated to the pursuit of maximum motion for all. Comprised of a group of highly 
+          skilled and passionate networkers, DDLLC strives to grow the collective Network of all its members.
+          Originally founded as a philanthropic organization, DDLLC has retained its commitment to giving back to
+          the Network in many ways.
         </p>
         <div className="flex flex-wrap items-center gap-3">
           <Link
